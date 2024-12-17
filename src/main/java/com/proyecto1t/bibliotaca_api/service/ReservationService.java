@@ -5,7 +5,9 @@ import com.proyecto1t.bibliotaca_api.exceptions.NotFoundException;
 import com.proyecto1t.bibliotaca_api.model.Book;
 import com.proyecto1t.bibliotaca_api.model.Reservation;
 import com.proyecto1t.bibliotaca_api.model.User;
+import com.proyecto1t.bibliotaca_api.repository.BookRepository;
 import com.proyecto1t.bibliotaca_api.repository.ReservationRepository;
+import com.proyecto1t.bibliotaca_api.repository.UserRepository;
 import com.proyecto1t.bibliotaca_api.utils.Mapper;
 import com.proyecto1t.bibliotaca_api.utils.StringToLong;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,10 @@ public class ReservationService {
     private Mapper mapper;
     @Autowired
     private StringToLong stringToLong;
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private BookRepository bookRepository;
 
     public List<ReservationDTO> findAll() {
         List<Reservation> reservations = reservationRepository.findAll();
@@ -44,25 +50,23 @@ public class ReservationService {
         return mapper.toReservationDTO(reservation);
     }
 
-    public ReservationDTO createReservation(ReservationDTO reservationDTO, User userId, Book bookId) {
+    public ReservationDTO createReservation(ReservationDTO reservationDTO) {
         if (reservationDTO == null) {
             throw new NotFoundException("Reservation not found");
         }
 
-        if (userId == null) {
-            throw new NotFoundException("User not found");
-        }
+        User userId = userRepository.findById(reservationDTO.getUserId())
+                .orElseThrow(() -> new NotFoundException("User not found"));
 
-        if (bookId == null) {
-            throw new NotFoundException("Book not found");
-        }
+        Book bookId = bookRepository.findById(reservationDTO.getBookId())
+                .orElseThrow(() -> new NotFoundException("Book not found"));
 
         Reservation reservation = mapper.toReservationEntity(reservationDTO, userId, bookId);
         reservation = reservationRepository.save(reservation);
         return mapper.toReservationDTO(reservation);
     }
 
-    public ReservationDTO updateReservation(String id, ReservationDTO reservationDTO, User userId, Book bookId) {
+    public ReservationDTO updateReservation(String id, ReservationDTO reservationDTO) {
         if (reservationDTO == null) {
             throw new NotFoundException("Reservation not found");
         }
@@ -71,18 +75,16 @@ public class ReservationService {
             throw new NotFoundException("Reservation not found");
         }
 
-        if (userId == null) {
-            throw new NotFoundException("User not found");
-        }
+        User user = userRepository.findById(reservationDTO.getUserId())
+                .orElseThrow(() -> new NotFoundException("User not found"));
 
-        if (bookId == null) {
-            throw new NotFoundException("Book not found");
-        }
+        Book book = bookRepository.findById(reservationDTO.getBookId())
+                .orElseThrow(() -> new NotFoundException("Book not found"));
 
         Reservation existingReservation = reservationRepository.findById(stringToLong.method(id))
                 .orElseThrow(() -> new NotFoundException("Reservation not found"));
 
-        Reservation reservation = mapper.toReservationEntity(reservationDTO, userId, bookId);
+        Reservation reservation = mapper.toReservationEntity(reservationDTO, user, book);
         reservation.setId(existingReservation.getId());
         reservation = reservationRepository.save(reservation);
         return mapper.toReservationDTO(reservation);

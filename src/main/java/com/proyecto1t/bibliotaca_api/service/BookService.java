@@ -5,7 +5,9 @@ import com.proyecto1t.bibliotaca_api.exceptions.NotFoundException;
 import com.proyecto1t.bibliotaca_api.model.Author;
 import com.proyecto1t.bibliotaca_api.model.Book;
 import com.proyecto1t.bibliotaca_api.model.Category;
+import com.proyecto1t.bibliotaca_api.repository.AuthorRepository;
 import com.proyecto1t.bibliotaca_api.repository.BookRepository;
+import com.proyecto1t.bibliotaca_api.repository.CategoryRepository;
 import com.proyecto1t.bibliotaca_api.utils.Mapper;
 import com.proyecto1t.bibliotaca_api.utils.StringToLong;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,10 @@ public class BookService {
     private Mapper mapper;
     @Autowired
     private StringToLong stringToLong;
+    @Autowired
+    private AuthorRepository authorRepository;
+    @Autowired
+    private CategoryRepository categoryRepository;
 
     public List<BookDTO> findAll() {
         List<Book> books = bookRepository.findAll();
@@ -44,25 +50,22 @@ public class BookService {
         return mapper.toBookDTO(book);
     }
 
-    public BookDTO createBook(BookDTO bookDTO, Author authorId, Category categoryId) {
+    public BookDTO createBook(BookDTO bookDTO) {
         if (bookDTO == null) {
             throw new NotFoundException("Book not found");
         }
 
-        if(authorId == null) {
-            throw new NotFoundException("Author not found");
-        }
+        Author authorId = authorRepository.findById(bookDTO.getAuthorId())
+                .orElseThrow(() -> new NotFoundException("Author not found"));
 
-        if(categoryId == null) {
-            throw new NotFoundException("Category not found");
-        }
+        Category categoryId = categoryRepository.findById(bookDTO.getCategoryId())
+                .orElseThrow(() -> new NotFoundException("Category not found"));
 
         Book book = mapper.toBookEntity(bookDTO, authorId, categoryId);
         book = bookRepository.save(book);
         return mapper.toBookDTO(book);
     }
-
-    public BookDTO updateBook(String id, BookDTO bookDTO, Author authorId, Category categoryId) {
+    public BookDTO updateBook(String id, BookDTO bookDTO) {
         if (bookDTO == null) {
             throw new NotFoundException("Book not found");
         }
@@ -71,18 +74,16 @@ public class BookService {
             throw new NotFoundException("Book not found");
         }
 
-        if(authorId == null) {
-            throw new NotFoundException("Author not found");
-        }
+        Author author = authorRepository.findById(bookDTO.getAuthorId())
+                .orElseThrow(() -> new NotFoundException("Author not found"));
 
-        if(categoryId == null) {
-            throw new NotFoundException("Category not found");
-        }
+        Category category = categoryRepository.findById(bookDTO.getCategoryId())
+                .orElseThrow(() -> new NotFoundException("Category not found"));
 
         Book existingBook = bookRepository.findById(stringToLong.method(id))
                 .orElseThrow(() -> new NotFoundException("Book not found"));
 
-        Book book = mapper.toBookEntity(bookDTO, authorId, categoryId);
+        Book book = mapper.toBookEntity(bookDTO, author, category);
         book.setId(existingBook.getId());
         book = bookRepository.save(book);
         return mapper.toBookDTO(book);

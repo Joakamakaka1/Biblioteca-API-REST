@@ -15,31 +15,31 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
-    @GetMapping("/") // -> http://localhost:8080/category
+    @GetMapping("/") // -> http://localhost:8080/authors
     public ResponseEntity<List<CategoryDTO>> getAllCategories() {
         List<CategoryDTO> categories = categoryService.findAll();
         return new ResponseEntity<>(categories, HttpStatus.OK);
     }
 
-    @GetMapping("/{id}") // -> http://localhost:8080/category/1
+    @GetMapping("/{id}") // -> http://localhost:8080/authors/1
     public ResponseEntity<CategoryDTO> getCategoryById(@PathVariable String id) {
         CategoryDTO category = categoryService.findById(id);
         return new ResponseEntity<>(category, HttpStatus.OK);
     }
 
-    @PostMapping("/") // -> http://localhost:8080/category
+    @PostMapping("/") // -> http://localhost:8080/authors
     public ResponseEntity<CategoryDTO> createCategory(@RequestBody CategoryDTO category) {
         CategoryDTO newCategory = categoryService.createCategory(category);
         return new ResponseEntity<>(newCategory, HttpStatus.CREATED);
     }
 
-    @PutMapping("/{id}") // -> http://localhost:8080/category/1
+    @PutMapping("/{id}") // -> http://localhost:8080/authors/1
     public ResponseEntity<CategoryDTO> updateCategory(@PathVariable String id, @RequestBody CategoryDTO category) {
         CategoryDTO updatedCategory = categoryService.updateCategory(id, category);
         return new ResponseEntity<>(updatedCategory, HttpStatus.OK);
     }
 
-    @DeleteMapping("/{id}") // -> http://localhost:8080/category/1
+    @DeleteMapping("/{id}") // -> http://localhost:8080/authors/1
     public ResponseEntity<Void> deleteCategory(@PathVariable String id) {
         categoryService.deleteCategory(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);

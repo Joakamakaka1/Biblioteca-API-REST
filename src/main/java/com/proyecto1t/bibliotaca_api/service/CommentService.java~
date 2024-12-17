@@ -55,13 +55,13 @@ public class CommentService {
             throw new NotFoundException("Comment not found");
         }
 
-        User userId = userRepository.findById(commentDTO.getUserId())
+        User user = userRepository.findById(commentDTO.getUserId())
                 .orElseThrow(() -> new NotFoundException("User not found"));
 
-        Book bookId = bookRepository.findById(commentDTO.getBookId())
+        Book book = bookRepository.findById(commentDTO.getBookId())
                 .orElseThrow(() -> new NotFoundException("Book not found"));
 
-        Comment comment = mapper.toCommentEntity(commentDTO, userId, bookId);
+        Comment comment = mapper.toCommentEntity(commentDTO, user, book);
         comment = commentRepository.save(comment);
         return mapper.toCommentDTO(comment);
     }

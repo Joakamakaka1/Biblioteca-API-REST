@@ -38,10 +38,4 @@ public class LoanController {
         LoanDTO updatedLoan = loanService.updateLoan(id, loan);
         return new ResponseEntity<>(updatedLoan, HttpStatus.OK);
     }
-
-    @DeleteMapping("/{id}") // -> http://localhost:8080/loan/1
-    public ResponseEntity<Void> deleteLoan(@PathVariable String id) {
-        loanService.deleteLoan(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
 }
