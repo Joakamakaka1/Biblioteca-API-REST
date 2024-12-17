@@ -40,7 +40,7 @@ public class UserController {
         return new ResponseEntity<>(registeredUser, HttpStatus.CREATED);
     }
 
-    @GetMapping("/") // -> http://localhost:8080/users/
+    @GetMapping("/") // -> http://localhost:8080/users
     public ResponseEntity<List<UserResponseDTO>> getAllUsers() {
         List<UserResponseDTO> users = userService.findAll();
         return new ResponseEntity<>(users, HttpStatus.OK);

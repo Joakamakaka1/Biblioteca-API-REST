@@ -15,7 +15,7 @@ public class AuthorController {
     @Autowired
     private AuthorService authorService;
 
-    @GetMapping("/") // -> http://localhost:8080/authors
+    @GetMapping("/") // -> http://localhost:8080/authors/
     public ResponseEntity<List<AuthorDTO>> getAllAuthors() {
         List<AuthorDTO> authors = authorService.findAll();
         return new ResponseEntity<>(authors, HttpStatus.OK);
@@ -27,7 +27,7 @@ public class AuthorController {
         return new ResponseEntity<>(author, HttpStatus.OK);
     }
 
-    @PostMapping("/") // -> http://localhost:8080/authors
+    @PostMapping("/") // -> http://localhost:8080/authors/
     public ResponseEntity<AuthorDTO> createAuthor(@RequestBody AuthorDTO author) {
         AuthorDTO newAuthor = authorService.createAuthor(author);
         return new ResponseEntity<>(newAuthor, HttpStatus.CREATED);

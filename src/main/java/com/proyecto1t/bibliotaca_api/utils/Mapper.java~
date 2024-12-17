@@ -94,12 +94,14 @@ public class Mapper {
         reservationDTO.setUserId(reservation.getUser().getId());
         reservationDTO.setReservationDate(reservation.getReservationDate());
         reservationDTO.setStatus(reservation.getStatus().toString());
+        reservationDTO.setId(reservation.getId());
         reservationDTO.setBookId(reservation.getBook().getId());
         return reservationDTO;
     }
 
     public Reservation toReservationEntity(ReservationDTO reservationDTO, User user, Book book) {
         Reservation reservation = new Reservation();
+        reservation.setId(reservationDTO.getId());
         reservation.setReservationDate(reservationDTO.getReservationDate());
         reservation.setStatus(Reservation.ReservationStatus.valueOf(reservationDTO.getStatus()));
         reservation.setUser(user);

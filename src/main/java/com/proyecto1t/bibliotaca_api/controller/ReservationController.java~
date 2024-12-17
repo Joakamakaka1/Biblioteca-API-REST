@@ -27,7 +27,7 @@ public class ReservationController {
         return new ResponseEntity<>(reservation, HttpStatus.OK);
     }
 
-    @PostMapping("/") // -> http://localhost:8080/reservation/
+    @PostMapping("/") // -> http://localhost:8080/reservation
     public ResponseEntity<ReservationDTO> createReservation(@RequestBody ReservationDTO reservation) {
         ReservationDTO createdReservation = reservationService.createReservation(reservation);
         return new ResponseEntity<>(createdReservation, HttpStatus.CREATED);

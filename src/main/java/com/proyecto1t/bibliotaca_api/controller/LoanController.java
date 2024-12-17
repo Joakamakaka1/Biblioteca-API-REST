@@ -15,7 +15,7 @@ public class LoanController {
     @Autowired
     private LoanService loanService;
 
-    @GetMapping("/") // -> http://localhost:8080/loan
+    @GetMapping("/") // -> http://localhost:8080/loan/
     public ResponseEntity<List<LoanDTO>> getAllLoans() {
         List<LoanDTO> loans = loanService.findAll();
         return new ResponseEntity<>(loans, HttpStatus.OK);
@@ -27,7 +27,7 @@ public class LoanController {
         return new ResponseEntity<>(loan, HttpStatus.OK);
     }
 
-    @PostMapping("/") // -> http://localhost:8080/loan
+    @PostMapping("/") // -> http://localhost:8080/loan/
     public ResponseEntity<LoanDTO> createLoan(@RequestBody LoanDTO loan) {
         LoanDTO createdLoan = loanService.createLoan(loan);
         return new ResponseEntity<>(createdLoan, HttpStatus.CREATED);

@@ -15,7 +15,7 @@ public class CommentController {
     @Autowired
     private CommentService commentService;
 
-    @GetMapping("/") // -> http://localhost:8080/comment
+    @GetMapping("/") // -> http://localhost:8080/comment/
     public ResponseEntity<List<CommentDTO>> getAllComments() {
         List<CommentDTO> comments = commentService.findAll();
         return new ResponseEntity<>(comments, HttpStatus.OK);
@@ -27,7 +27,7 @@ public class CommentController {
         return new ResponseEntity<>(comment, HttpStatus.OK);
     }
 
-    @PostMapping("/") // -> http://localhost:8080/comment
+    @PostMapping("/") // -> http://localhost:8080/comment/
     public ResponseEntity<CommentDTO> createComment(@RequestBody CommentDTO comment) {
         CommentDTO createdComment = commentService.createComment(comment);
         return new ResponseEntity<>(createdComment, HttpStatus.CREATED);

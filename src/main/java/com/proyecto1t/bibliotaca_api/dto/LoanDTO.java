@@ -10,7 +10,6 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 public class LoanDTO {
-    private Long id;
     private LocalDate loanDate;
     private LocalDate returnDate;
     private Long userId;

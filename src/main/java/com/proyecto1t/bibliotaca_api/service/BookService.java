@@ -65,6 +65,7 @@ public class BookService {
         book = bookRepository.save(book);
         return mapper.toBookDTO(book);
     }
+
     public BookDTO updateBook(String id, BookDTO bookDTO) {
         if (bookDTO == null) {
             throw new NotFoundException("Book not found");

@@ -41,7 +41,7 @@ public class SecurityConfig {
         return http
                 .csrf(csrf -> csrf.disable()) // Desactiva la protección CSRF para evitar ataques CSRF (cross-site request forgery)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/**", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                        .requestMatchers("/**").permitAll()
                 )
                 // Configuración de la autenticación con JWT
                 .oauth2ResourceServer((oauth2) -> oauth2.jwt(Customizer.withDefaults()))

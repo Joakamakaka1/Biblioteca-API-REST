@@ -15,7 +15,7 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
-    @GetMapping("/") // -> http://localhost:8080/category
+    @GetMapping("/") // -> http://localhost:8080/category/
     public ResponseEntity<List<CategoryDTO>> getAllCategories() {
         List<CategoryDTO> categories = categoryService.findAll();
         return new ResponseEntity<>(categories, HttpStatus.OK);
@@ -27,7 +27,7 @@ public class CategoryController {
         return new ResponseEntity<>(category, HttpStatus.OK);
     }
 
-    @PostMapping("/") // -> http://localhost:8080/category
+    @PostMapping("/") // -> http://localhost:8080/category/
     public ResponseEntity<CategoryDTO> createCategory(@RequestBody CategoryDTO category) {
         CategoryDTO newCategory = categoryService.createCategory(category);
         return new ResponseEntity<>(newCategory, HttpStatus.CREATED);
