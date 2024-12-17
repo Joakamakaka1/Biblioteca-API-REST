@@ -19,10 +19,7 @@ public class User {
     private Long id;
 
     @NotEmpty(message = "Name cannot be empty")
-    private String firstName;
-
-    @NotEmpty(message = "Last name cannot be empty")
-    private String lastName;
+    private String username;
 
     @Email(message = "Invalid email address")
     @NotEmpty(message = "Email cannot be empty")

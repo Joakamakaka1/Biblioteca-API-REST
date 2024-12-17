@@ -125,22 +125,19 @@ public class Mapper {
     }
 
     // UserResponse
-    public UserResponseDTO toUserResponseDTO(User user, String token) {
+    public UserResponseDTO toUserResponseDTO(User user) {
         return new UserResponseDTO(
                 user.getId(),
-                user.getFirstName(),
-                user.getLastName(),
+                user.getUsername(),
                 user.getEmail(),
-                user.getRole().name(), // Convertimos el Enum a String
-                token
+                user.getRole().name()
         );
     }
 
     public User toUserEntity(UserResponseDTO userResponseDTO) {
         return new User(
                 userResponseDTO.getId(),
-                userResponseDTO.getFirstName(),
-                userResponseDTO.getLastName(),
+                userResponseDTO.getUsername(),
                 userResponseDTO.getEmail(),
                 null, // Password no se incluye en el DTO
                 null, // Comments se manejarán de forma independiente
