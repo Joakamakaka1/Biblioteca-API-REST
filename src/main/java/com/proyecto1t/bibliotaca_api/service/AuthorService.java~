@@ -60,7 +60,6 @@ public class AuthorService {
                 .orElseThrow(() -> new NotFoundException("Author not found"));
 
         Author author = mapper.toAuthorEntity(authorDTO);
-        author.setId(existingAuthor.getId());
         author = authorRepository.save(author);
         return mapper.toAuthorDTO(author);
     }
