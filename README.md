@@ -92,3 +92,90 @@ Con este sistema, se reduce el tiempo dedicado a tareas administrativas y se mej
 - **Libros a Comentarios**: Un libro puede tener varios comentarios (**1:N**). La tabla **Comments** contiene la clave foránea `LibroID` que referencia a **Books**.
 - **Libros a Préstamos**: Un libro puede tener varios préstamos (**1:N**). La tabla **Loans** contiene la clave foránea `LibroID` que referencia a **Books**.
 - **Libros a Reservas**: Un libro puede estar reservado múltiples veces (**1:N**). La tabla **Reservations** contiene la clave foránea `LibroID` que referencia a **Books**.
+
+## Endpoints de la API
+
+### Endpoints para **Autores (Authors)**
+
+| **Método** | **Endpoint**       | **Descripción**                                      | **Acceso**       |
+|------------|--------------------|------------------------------------------------------|------------------|
+| **GET**    | `/authors`         | Obtiene la lista de todos los autores registrados.   | Todos            |
+| **GET**    | `/authors/{id}`    | Obtiene los detalles de un autor específico por ID.  | Todos            |
+| **POST**   | `/authors`         | Crea un nuevo autor.                                 | Solo Admin       |
+| **PUT**    | `/authors/{id}`    | Actualiza los datos de un autor por ID.              | Solo Admin       |
+| **DELETE** | `/authors/{id}`    | Elimina un autor por ID.                             | Solo Admin       |
+
+---
+
+### Endpoints para **Libros (Books)**
+
+| **Método** | **Endpoint**       | **Descripción**                                      | **Acceso**       |
+|------------|--------------------|------------------------------------------------------|------------------|
+| **GET**    | `/books`           | Obtiene la lista de todos los libros registrados.    | Todos            |
+| **GET**    | `/books/{id}`      | Obtiene los detalles de un libro específico por ID.  | Todos            |
+| **POST**   | `/books`           | Crea un nuevo libro.                                 | Solo Admin       |
+| **PUT**    | `/books/{id}`      | Actualiza los datos de un libro por ID.              | Solo Admin       |
+| **DELETE** | `/books/{id}`      | Elimina un libro por ID.                             | Solo Admin       |
+
+---
+
+### Endpoints para **Categorías (Categories)**
+
+| **Método** | **Endpoint**       | **Descripción**                                      | **Acceso**       |
+|------------|--------------------|------------------------------------------------------|------------------|
+| **GET**    | `/categories`      | Obtiene la lista de todas las categorías.            | Todos            |
+| **GET**    | `/categories/{id}` | Obtiene los detalles de una categoría por ID.        | Todos            |
+| **POST**   | `/categories`      | Crea una nueva categoría.                            | Solo Admin       |
+| **PUT**    | `/categories/{id}` | Actualiza los datos de una categoría por ID.         | Solo Admin       |
+| **DELETE** | `/categories/{id}` | Elimina una categoría por ID.                        | Solo Admin       |
+
+---
+
+### Endpoints para **Usuarios (Users)**
+
+| **Método** | **Endpoint**       | **Descripción**                                      | **Acceso**                |
+|------------|--------------------|------------------------------------------------------|---------------------------|
+| **GET**    | `/users`           | Obtiene la lista de todos los usuarios registrados.  | Solo Admin                |
+| **GET**    | `/users/{id}`      | Obtiene los detalles de un usuario específico por ID.| Cliente (solo su info) o Admin |
+| **POST**   | `/users/register`  | Registra un nuevo usuario.                           | Todos                    |
+| **POST**   | `/users/login`     | Inicia sesión y genera un token JWT.                 | Todos                    |
+| **PUT**    | `/users/{id}`      | Actualiza los datos de un usuario específico por ID. | Cliente (solo su info) o Admin |
+| **DELETE** | `/users/{id}`      | Elimina un usuario por ID.                           | Solo Admin                |
+
+---
+
+### Endpoints para **Préstamos (Loans)**
+
+| **Método** | **Endpoint**       | **Descripción**                                      | **Acceso**                |
+|------------|--------------------|------------------------------------------------------|---------------------------|
+| **GET**    | `/loans`           | Obtiene todos los préstamos registrados.            | Solo Admin                |
+| **GET**    | `/loans/{id}`      | Obtiene los préstamos realizados por el usuario autenticado.| Cliente (solo su info) o Admin |
+| **POST**   | `/loans`           | Registra un nuevo préstamo.                          | Solo Admin                |
+| **PUT**    | `/loans/{id}`      | Actualiza los datos de un préstamo por ID.           | Solo Admin                |
+| **DELETE** | `/loans/{id}`      | Elimina un préstamo por ID.                          | Solo Admin                |
+
+---
+
+### Endpoints para **Reservas (Reservations)**
+
+| **Método** | **Endpoint**       | **Descripción**                                      | **Acceso**                |
+|------------|--------------------|------------------------------------------------------|---------------------------|
+| **GET**    | `/reservations`    | Obtiene todas las reservas registradas.             | Solo Admin                |
+| **GET**    | `/reservations/{id}`| Obtiene las reservas realizadas por el usuario autenticado.| Cliente (solo su info) o Admin |
+| **POST**   | `/reservations`    | Registra una nueva reserva.                          | Cliente (solo su info) o Admin |
+| **PUT**    | `/reservations/{id}`| Actualiza los datos de una reserva por ID.           | Solo Admin                |
+| **DELETE** | `/reservations/{id}`| Elimina una reserva por ID.                          | Solo Admin                |
+
+---
+
+### Endpoints para **Comentarios (Comments)**
+
+| **Método** | **Endpoint**       | **Descripción**                                      | **Acceso**                |
+|------------|--------------------|------------------------------------------------------|---------------------------|
+| **GET**    | `/comments`        | Obtiene todos los comentarios de los libros.         | Todos                    |
+| **POST**   | `/comments`        | Crea un nuevo comentario para un libro.              | Cliente o Admin           |
+| **PUT**    | `/comments/{id}`   | Actualiza un comentario por ID.                      | Cliente (solo su info) o Admin |
+| **DELETE** | `/comments/{id}`   | Elimina un comentario por ID.                        | Cliente (solo su info) o Admin |
+
+
+---
