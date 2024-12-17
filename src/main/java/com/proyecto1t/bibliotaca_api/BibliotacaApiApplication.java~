@@ -1,0 +1,13 @@
+package com.proyecto1t.bibliotaca_api;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class BibliotacaApiApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(BibliotacaApiApplication.class, args);
+	}
+
+}

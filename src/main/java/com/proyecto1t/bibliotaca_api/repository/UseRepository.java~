@@ -1,0 +1,11 @@
+package com.proyecto1t.bibliotaca_api.repository;
+
+import com.proyecto1t.bibliotaca_api.model.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.Optional;
+
+public interface UseRepository extends JpaRepository<User, Long> {
+    Optional<User> findByEmail(String email);
+    Optional<User> findByFirstName(String firstName);
+}
