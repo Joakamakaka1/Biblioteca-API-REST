@@ -95,6 +95,8 @@ Con este sistema, se reduce el tiempo dedicado a tareas administrativas y se mej
 
 ## Endpoints de la API
 
+A continuación, se detallan los endpoints para cada tabla de la base de datos:
+
 ### Endpoints para **Autores (Authors)**
 
 | **Método** | **Endpoint**       | **Descripción**                                      | **Acceso**       |
