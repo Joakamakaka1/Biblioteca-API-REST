@@ -177,5 +177,70 @@ Con este sistema, se reduce el tiempo dedicado a tareas administrativas y se mej
 | **PUT**    | `/comments/{id}`   | Actualiza un comentario por ID.                      | Cliente (solo su info) o Admin |
 | **DELETE** | `/comments/{id}`   | Elimina un comentario por ID.                        | Cliente (solo su info) o Admin |
 
+---
+
+## Lógica de Negocio
+
+La lógica de negocio está centrada en los siguientes aspectos clave:
+
+- **Autenticación y Autorización**: Utilizamos **JWT** para autenticar y autorizar a los usuarios. Los clientes deben estar autenticados para acceder a sus propios datos. Los administradores tienen permisos para gestionar todos los recursos del sistema.
+
+- **Validaciones en los campos**: Los campos de la API se validan para asegurarse de que contengan datos válidos y no sean nulos. Estas validaciones garantizan la integridad de los datos almacenados en la base de datos.
+
+## Validación de Campos
+
+| **Entidad**         | **Campo**         | **Regla de Validación**                                                                                                     |
+|----------------------|-------------------|-----------------------------------------------------------------------------------------------------------------------------|
+| **Author**           | `name`           | Debe ser único, no estar vacío, y contener solo letras y espacios (`regex: ^[a-zA-ZÀ-ÿ\s]{2,50}$`).                          |
+| **Book**             | `title`          | No puede estar vacío, debe tener entre 1 y 100 caracteres (`regex: ^.{1,100}$`).                                            |
+|                      | `isbn`           | Debe tener exactamente 13 caracteres, ser único y no estar vacío (`regex: ^\d{13}$`).                                       |
+|                      | `author`         | Debe referenciar un autor existente (validación en base a la clave foránea).                                                |
+|                      | `category`       | Debe referenciar una categoría existente (validación en base a la clave foránea).                                           |
+| **Category**         | `name`           | Debe ser único, no estar vacío, y contener solo letras y espacios (`regex: ^[a-zA-ZÀ-ÿ\s]{2,50}$`).                          |
+| **User**             | `email`          | Debe tener un formato válido y ser único (`regex: ^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$`).                        |
+|                      | `password`       | Debe tener al menos 6 caracteres, incluyendo una letra mayúscula, un número y un carácter especial (`regex: ^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$`). |
+|                      | `role`           | Debe ser uno de los valores permitidos (`regex: ^(ADMIN|CLIENT)$`).                                                         |
+| **Loan/Reservation** | `date`           | No puede ser en el pasado; debe tener formato válido de fecha ISO 8601 (`regex: ^\d{4}-\d{2}-\d{2}$`).                       |
+|                      | `user`           | Debe referenciar un usuario existente (validación en base a la clave foránea).                                              |
+| **Comment**          | `content`        | No puede superar los 500 caracteres y no debe estar vacío (`regex: ^.{1,500}$`).                                            |
+|                      | `book`           | Debe referenciar un libro existente (validación en base a la clave foránea).                                                |
+
+---
+
+## Excepciones y Códigos de Respuesta
+
+| **Código** | **Excepción**         | **Descripción**                                                                 |
+|------------|-----------------------|---------------------------------------------------------------------------------|
+| **400**    | `BadRequest`          | Ocurre cuando se envían datos inválidos o incompletos en la solicitud.         |
+| **404**    | `NotFound`            | Se lanza cuando un recurso solicitado no existe.                               |
+| **409**    | `DuplicateEntry`      | Aparece cuando se intenta registrar un recurso con un valor único ya existente.|
+| **500**    | `InternalError`       | Se produce cuando ocurre un error inesperado en el servidor.                   |
+
+### Ejemplos de Uso
+1. **400 - BadRequest**:
+   - Intentar crear un autor sin nombre.
+   - Registrar un libro con un ISBN no válido.
+
+2. **404 - NotFound**:
+   - Buscar un libro que no existe en la base de datos.
+   - Intentar actualizar un usuario con un ID inexistente.
+
+3. **409 - DuplicateEntry**:
+   - Intentar registrar un autor con un nombre que ya existe.
+   - Registrar un libro con un ISBN ya utilizado.
+
+4. **500 - InternalError**:
+   - Ocurre cuando un error no controlado afecta al funcionamiento de la API.
+
+---
+
+## Requisitos
+
+- **Java 17** o superior.
+- **Spring Boot** 2.7.x o superior.
+- **JWT** para autenticación y autorización.
+- **Hibernate** para la gestión de la persistencia.
+- **MySQL/PostgreSQL** como sistema de base de datos.
+- **Postman** o herramientas similares para probar la API.
 
 ---
