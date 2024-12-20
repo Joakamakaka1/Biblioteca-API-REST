@@ -2,6 +2,7 @@ package com.proyecto1t.bibliotaca_api.controller;
 
 import com.proyecto1t.bibliotaca_api.dto.BookDTO;
 import com.proyecto1t.bibliotaca_api.service.BookService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,13 +29,13 @@ public class BookController {
     }
 
     @PostMapping("/") // -> http://localhost:8080/books/
-    public ResponseEntity<BookDTO> createBook(@RequestBody BookDTO book) {
+    public ResponseEntity<BookDTO> createBook(@Valid @RequestBody BookDTO book) {
         BookDTO newBook = bookService.createBook(book);
         return new ResponseEntity<>(newBook, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}") // -> http://localhost:8080/books/1
-    public ResponseEntity<BookDTO> updateBook(@PathVariable String id, @RequestBody BookDTO book) {
+    public ResponseEntity<BookDTO> updateBook(@PathVariable String id, @Valid @RequestBody BookDTO book) {
         BookDTO updatedBook = bookService.updateBook(id, book);
         return new ResponseEntity<>(updatedBook, HttpStatus.OK);
     }

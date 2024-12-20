@@ -2,6 +2,7 @@ package com.proyecto1t.bibliotaca_api.controller;
 
 import com.proyecto1t.bibliotaca_api.dto.CategoryDTO;
 import com.proyecto1t.bibliotaca_api.service.CategoryService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,13 +29,13 @@ public class CategoryController {
     }
 
     @PostMapping("/") // -> http://localhost:8080/category/
-    public ResponseEntity<CategoryDTO> createCategory(@RequestBody CategoryDTO category) {
+    public ResponseEntity<CategoryDTO> createCategory(@Valid @RequestBody CategoryDTO category) {
         CategoryDTO newCategory = categoryService.createCategory(category);
         return new ResponseEntity<>(newCategory, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}") // -> http://localhost:8080/category/1
-    public ResponseEntity<CategoryDTO> updateCategory(@PathVariable String id, @RequestBody CategoryDTO category) {
+    public ResponseEntity<CategoryDTO> updateCategory(@PathVariable String id, @Valid @RequestBody CategoryDTO category) {
         CategoryDTO updatedCategory = categoryService.updateCategory(id, category);
         return new ResponseEntity<>(updatedCategory, HttpStatus.OK);
     }

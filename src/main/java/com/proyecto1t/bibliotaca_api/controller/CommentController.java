@@ -2,6 +2,7 @@ package com.proyecto1t.bibliotaca_api.controller;
 
 import com.proyecto1t.bibliotaca_api.dto.CommentDTO;
 import com.proyecto1t.bibliotaca_api.service.CommentService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,13 +29,13 @@ public class CommentController {
     }
 
     @PostMapping("/") // -> http://localhost:8080/comment/
-    public ResponseEntity<CommentDTO> createComment(@RequestBody CommentDTO comment) {
+    public ResponseEntity<CommentDTO> createComment(@Valid @RequestBody CommentDTO comment) {
         CommentDTO createdComment = commentService.createComment(comment);
         return new ResponseEntity<>(createdComment, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}") // -> http://localhost:8080/comment/1
-    public ResponseEntity<CommentDTO> updateComment(@PathVariable String id, @RequestBody CommentDTO comment) {
+    public ResponseEntity<CommentDTO> updateComment(@PathVariable String id,@Valid @RequestBody CommentDTO comment) {
         CommentDTO updatedComment = commentService.updateComment(id, comment);
         return new ResponseEntity<>(updatedComment, HttpStatus.OK);
     }

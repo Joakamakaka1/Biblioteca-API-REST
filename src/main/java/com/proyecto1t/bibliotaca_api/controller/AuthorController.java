@@ -2,6 +2,7 @@ package com.proyecto1t.bibliotaca_api.controller;
 
 import com.proyecto1t.bibliotaca_api.dto.AuthorDTO;
 import com.proyecto1t.bibliotaca_api.service.AuthorService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,13 +29,13 @@ public class AuthorController {
     }
 
     @PostMapping("/") // -> http://localhost:8080/authors/
-    public ResponseEntity<AuthorDTO> createAuthor(@RequestBody AuthorDTO author) {
+    public ResponseEntity<AuthorDTO> createAuthor(@Valid @RequestBody AuthorDTO author) {
         AuthorDTO newAuthor = authorService.createAuthor(author);
         return new ResponseEntity<>(newAuthor, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}") // -> http://localhost:8080/authors/1
-    public ResponseEntity<AuthorDTO> updateAuthor(@PathVariable String id, @RequestBody AuthorDTO author) {
+    public ResponseEntity<AuthorDTO> updateAuthor(@PathVariable String id, @Valid @RequestBody AuthorDTO author) {
         AuthorDTO updatedAuthor = authorService.updateAuthor(id, author);
         return new ResponseEntity<>(updatedAuthor, HttpStatus.OK);
     }

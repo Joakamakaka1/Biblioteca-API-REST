@@ -2,7 +2,6 @@ package com.proyecto1t.bibliotaca_api.controller;
 
 import com.proyecto1t.bibliotaca_api.dto.LoanDTO;
 import com.proyecto1t.bibliotaca_api.service.LoanService;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,13 +28,13 @@ public class LoanController {
     }
 
     @PostMapping("/") // -> http://localhost:8080/loan/
-    public ResponseEntity<LoanDTO> createLoan(@Valid @RequestBody LoanDTO loan) {
+    public ResponseEntity<LoanDTO> createLoan(@RequestBody LoanDTO loan) {
         LoanDTO createdLoan = loanService.createLoan(loan);
         return new ResponseEntity<>(createdLoan, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}") // -> http://localhost:8080/loan/1
-    public ResponseEntity<LoanDTO> updateLoan(@PathVariable String id, @Valid @RequestBody LoanDTO loan) {
+    public ResponseEntity<LoanDTO> updateLoan(@PathVariable String id, @RequestBody LoanDTO loan) {
         LoanDTO updatedLoan = loanService.updateLoan(id, loan);
         return new ResponseEntity<>(updatedLoan, HttpStatus.OK);
     }

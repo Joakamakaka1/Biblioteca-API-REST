@@ -2,41 +2,86 @@ package com.proyecto1t.bibliotaca_api.exceptions;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
+
 
 @ControllerAdvice
 public class RestHandlerException {
-    @ExceptionHandler(NotFoundException.class) // Manejo de la excepción NotFoundException
-    @ResponseStatus(HttpStatus.NOT_FOUND) // Respuesta con estado HTTP 404
+    @ExceptionHandler(NotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
     @ResponseBody
     public ErrorMsg handleNotFoundException(HttpServletRequest req, NotFoundException ex) {
-        // Devolver un objeto ErrorMsg con los detalles de la excepción
-        return new ErrorMsg(ex.getMessage(), req.getRequestURI(), LocalDateTime.now());
+        return new ErrorMsg(
+                LocalDateTime.now(),
+                HttpStatus.NOT_FOUND.value(),
+                List.of(ex.getMessage()),
+                req.getRequestURI()
+        );
     }
 
-    @ExceptionHandler(Exception.class) // Manejo de cualquier otra excepción
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR) // Respuesta con estado HTTP 500
-    @ResponseBody
-    public ErrorMsg handleException(HttpServletRequest req, Exception ex) {
-        return new ErrorMsg(ex.getMessage(), req.getRequestURI(), LocalDateTime.now());
-    }
-
-    @ExceptionHandler(BadRequestException.class) // Manejo de la excepción BadRequestException
-    @ResponseStatus(HttpStatus.BAD_REQUEST) // Respuesta con estado HTTP 400
+    @ExceptionHandler(BadRequestException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
     public ErrorMsg handleBadRequestException(HttpServletRequest req, BadRequestException ex) {
-        return new ErrorMsg(ex.getMessage(), req.getRequestURI(), LocalDateTime.now());
+        return new ErrorMsg(
+                LocalDateTime.now(),
+                HttpStatus.BAD_REQUEST.value(),
+                List.of(ex.getMessage()),
+                req.getRequestURI()
+        );
     }
 
-    @ExceptionHandler(DuplicateException.class) // Manejo de la excepción DuplicateException
-    @ResponseStatus(HttpStatus.CONFLICT) // Respuesta con estado HTTP 409
+    @ExceptionHandler(DuplicateException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
     @ResponseBody
     public ErrorMsg handleDuplicateException(HttpServletRequest req, DuplicateException ex) {
-        return new ErrorMsg(ex.getMessage(), req.getRequestURI(), LocalDateTime.now());
+        return new ErrorMsg(
+                LocalDateTime.now(),
+                HttpStatus.CONFLICT.value(),
+                List.of(ex.getMessage()),
+                req.getRequestURI()
+        );
+    }
+
+    @ExceptionHandler(InternalErrorException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseBody
+    public ErrorMsg handleException(HttpServletRequest req, Exception ex) {
+        return new ErrorMsg(
+                LocalDateTime.now(),
+                HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                List.of(ex.getMessage()),
+                req.getRequestURI()
+        );
+    }
+
+    // Manejo de excepciones de validación con @Valid
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    public ErrorMsg handleValidationExceptions(HttpServletRequest req, MethodArgumentNotValidException ex) {
+        List<String> errors = ex.getBindingResult()
+                .getAllErrors()
+                .stream()
+                .map(error -> (error instanceof FieldError)
+                        ? ((FieldError) error).getField() + ": " + error.getDefaultMessage()
+                        : error.getDefaultMessage())
+                .collect(Collectors.toList());
+
+        return new ErrorMsg(
+                LocalDateTime.now(),
+                HttpStatus.BAD_REQUEST.value(),
+                errors,
+                req.getRequestURI()
+        );
     }
 }

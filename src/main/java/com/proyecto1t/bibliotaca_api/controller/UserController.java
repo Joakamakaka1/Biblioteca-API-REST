@@ -5,6 +5,7 @@ import com.proyecto1t.bibliotaca_api.dto.UserRegisterDTO;
 import com.proyecto1t.bibliotaca_api.dto.UserResponseDTO;
 import com.proyecto1t.bibliotaca_api.service.TokenService;
 import com.proyecto1t.bibliotaca_api.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,7 +36,7 @@ public class UserController {
     }
 
     @PostMapping("/register") // -> http://localhost:8080/users/register
-    public ResponseEntity<UserRegisterDTO> register(@RequestBody UserRegisterDTO userRegisterDTO) {
+    public ResponseEntity<UserRegisterDTO> register(@Valid @RequestBody UserRegisterDTO userRegisterDTO) {
         UserRegisterDTO registeredUser = userService.registerUser(userRegisterDTO);
         return new ResponseEntity<>(registeredUser, HttpStatus.CREATED);
     }
@@ -53,7 +54,7 @@ public class UserController {
     }
 
     @PutMapping("/{username}") // -> http://localhost:8080/users/1
-    public ResponseEntity<UserResponseDTO> updateUser(@PathVariable String username, @RequestBody UserRegisterDTO user) {
+    public ResponseEntity<UserResponseDTO> updateUser(@PathVariable String username,@Valid @RequestBody UserRegisterDTO user) {
         UserResponseDTO updatedUser = userService.updateUser(username, user);
         return new ResponseEntity<>(updatedUser, HttpStatus.OK);
     }
