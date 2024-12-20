@@ -172,9 +172,10 @@ A continuación, se detallan los endpoints para cada tabla de la base de datos:
 
 ### Endpoints para **Comentarios (Comments)**
 
-| **Método** | **Endpoint**       | **Descripción**                                      | **Acceso**                |
-|------------|--------------------|------------------------------------------------------|---------------------------|
-| **GET**    | `/comments`        | Obtiene todos los comentarios de los libros.         | Todos                    |
+| **Método** | **Endpoint**  | **Descripción**                                      | **Acceso**                |
+|------------|---------------|------------------------------------------------------|---------------------------|
+| **GET**    | `/comments`   | Obtiene todos los comentarios de los libros.         | Todos                    |
+| **GET**    | `/comments/{id}` | Obtiene un comentario por ID.         | Todos                    |
 | **POST**   | `/comments`        | Crea un nuevo comentario para un libro.              | Cliente o Admin           |
 | **PUT**    | `/comments/{id}`   | Actualiza un comentario por ID.                      | Cliente (solo su info) o Admin |
 | **DELETE** | `/comments/{id}`   | Elimina un comentario por ID.                        | Cliente (solo su info) o Admin |

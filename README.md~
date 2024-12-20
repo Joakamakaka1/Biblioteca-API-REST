@@ -135,14 +135,14 @@ A continuación, se detallan los endpoints para cada tabla de la base de datos:
 
 ### Endpoints para **Usuarios (Users)**
 
-| **Método** | **Endpoint**       | **Descripción**                                      | **Acceso**                |
-|------------|--------------------|------------------------------------------------------|---------------------------|
-| **GET**    | `/users`           | Obtiene la lista de todos los usuarios registrados.  | Solo Admin                |
-| **GET**    | `/users/{id}`      | Obtiene los detalles de un usuario específico por ID.| Cliente (solo su info) o Admin |
-| **POST**   | `/users/register`  | Registra un nuevo usuario.                           | Todos                    |
-| **POST**   | `/users/login`     | Inicia sesión y genera un token JWT.                 | Todos                    |
-| **PUT**    | `/users/{id}`      | Actualiza los datos de un usuario específico por ID. | Cliente (solo su info) o Admin |
-| **DELETE** | `/users/{id}`      | Elimina un usuario por ID.                           | Solo Admin                |
+| **Método** | **Endpoint**        | **Descripción**                                      | **Acceso**                |
+|------------|---------------------|------------------------------------------------------|---------------------------|
+| **GET**    | `/users`            | Obtiene la lista de todos los usuarios registrados.  | Solo Admin                |
+| **GET**    | `/users/{username}` | Obtiene los detalles de un usuario específico por username.| Cliente (solo su info) o Admin |
+| **POST**   | `/users/register`   | Registra un nuevo usuario.                           | Todos                    |
+| **POST**   | `/users/login`      | Inicia sesión y genera un token JWT.                 | Todos                    |
+| **PUT**    | `/users/{username}`       | Actualiza los datos de un usuario específico por username. | Cliente (solo su info) o Admin |
+| **DELETE** | `/users/{username}`       | Elimina un usuario por username.                           | Solo Admin                |
 
 ---
 
@@ -172,9 +172,10 @@ A continuación, se detallan los endpoints para cada tabla de la base de datos:
 
 ### Endpoints para **Comentarios (Comments)**
 
-| **Método** | **Endpoint**       | **Descripción**                                      | **Acceso**                |
-|------------|--------------------|------------------------------------------------------|---------------------------|
-| **GET**    | `/comments`        | Obtiene todos los comentarios de los libros.         | Todos                    |
+| **Método** | **Endpoint**  | **Descripción**                                      | **Acceso**                |
+|------------|---------------|------------------------------------------------------|---------------------------|
+| **GET**    | `/comments`   | Obtiene todos los comentarios de los libros.         | Todos                    |
+| **GET**    | `/comments/{id}` | Obtiene todos los comentarios de los libros.         | Todos                    |
 | **POST**   | `/comments`        | Crea un nuevo comentario para un libro.              | Cliente o Admin           |
 | **PUT**    | `/comments/{id}`   | Actualiza un comentario por ID.                      | Cliente (solo su info) o Admin |
 | **DELETE** | `/comments/{id}`   | Elimina un comentario por ID.                        | Cliente (solo su info) o Admin |
