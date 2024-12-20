@@ -41,7 +41,7 @@ public class LoanService {
     }
 
     public LoanDTO findById(String id) {
-        if (id == null || id.isEmpty() || id.isBlank()) {
+        if (id.isEmpty() || id.isBlank()) {
             throw new NotFoundException("Loan not found");
         }
         Loan loan = loanRepository.findById(stringToLong.method(id))
@@ -67,11 +67,7 @@ public class LoanService {
     }
 
     public LoanDTO updateLoan(String id, LoanDTO loanDTO) {
-        if (loanDTO == null) {
-            throw new NotFoundException("Loan not found");
-        }
-
-        if (id == null || id.isEmpty() || id.isBlank()) {
+        if (id.isEmpty() || id.isBlank()) {
             throw new NotFoundException("Loan not found");
         }
 
@@ -84,14 +80,17 @@ public class LoanService {
         Loan existingLoan = loanRepository.findById(stringToLong.method(id))
                 .orElseThrow(() -> new NotFoundException("Loan not found"));
 
-        Loan loan = mapper.toLoanEntity(loanDTO, user, book);
-        loan.setId(existingLoan.getId());
-        loan = loanRepository.save(loan);
+        existingLoan.setLoanDate(loanDTO.getLoanDate());
+        existingLoan.setReturnDate(loanDTO.getReturnDate());
+        existingLoan.setUser(user);
+        existingLoan.setBook(book);
+
+        Loan loan = loanRepository.save(existingLoan);
         return mapper.toLoanDTO(loan);
     }
 
     public void deleteLoan(String id) {
-        if (id == null || id.isEmpty() || id.isBlank()) {
+        if (id.isEmpty() || id.isBlank()) {
             throw new NotFoundException("Loan not found");
         }
 

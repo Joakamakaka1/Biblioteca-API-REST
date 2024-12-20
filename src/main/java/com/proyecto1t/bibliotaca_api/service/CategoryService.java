@@ -33,7 +33,7 @@ public class CategoryService {
     }
 
     public CategoryDTO findById(String id) {
-        if (id == null || id.isEmpty() || id.isBlank()) {
+        if (id.isEmpty() || id.isBlank()) {
             throw new NotFoundException("Category not found");
         }
         Category category = categoryRepository.findById(stringToLong.method(id))
@@ -53,25 +53,21 @@ public class CategoryService {
     }
 
     public CategoryDTO updateCategory(String id, CategoryDTO categoryDTO) {
-        if (categoryDTO == null) {
-            throw new NotFoundException("Category not found");
-        }
-
-        if (id == null || id.isEmpty() || id.isBlank()) {
+        if (id.isEmpty() || id.isBlank()) {
             throw new NotFoundException("Category not found");
         }
 
         Category existingCategory = categoryRepository.findById(stringToLong.method(id))
                 .orElseThrow(() -> new NotFoundException("Category not found"));
 
-        Category category = mapper.toCategoryEntity(categoryDTO);
-        category.setId(existingCategory.getId());
-        category = categoryRepository.save(category);
-        return mapper.toCategoryDTO(category);
+        existingCategory.setName(categoryDTO.getName());
+
+        Category updatedCategory = categoryRepository.save(existingCategory);
+        return mapper.toCategoryDTO(updatedCategory);
     }
 
     public void deleteCategory(String id) {
-        if (id == null || id.isEmpty() || id.isBlank()) {
+        if (id.isEmpty() || id.isBlank()) {
             throw new NotFoundException("Category not found");
         }
 

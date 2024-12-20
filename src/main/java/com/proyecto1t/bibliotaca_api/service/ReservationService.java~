@@ -81,7 +81,7 @@ public class ReservationService {
                 .orElseThrow(() -> new NotFoundException("Reservation not found"));
 
         existingReservation.setReservationDate(reservationDTO.getReservationDate());
-        existingReservation.setStatus(Reservation.ReservationStatus.valueOf(reservationDTO.getStatus())); // convertir a enum
+        existingReservation.setStatus(Reservation.ReservationStatus.valueOf(reservationDTO.getStatus()));
         existingReservation.setUser(user);
         existingReservation.setBook(book);
 

@@ -105,6 +105,10 @@ public class UserService implements UserDetailsService {
             throw new DuplicateException("First name already exists");
         }
 
+        if(username.isEmpty() || username.isBlank()) {
+            throw new NotFoundException("User not found");
+        }
+
         com.proyecto1t.bibliotaca_api.model.User user = userRepository
                 .findByUsername(username)
                 .orElseThrow(() -> new NotFoundException("User not found"));
@@ -119,7 +123,7 @@ public class UserService implements UserDetailsService {
     }
 
     public UserResponseDTO deleteUser(String username) {
-        if(username == null || username.isEmpty() || username.isBlank()) {
+        if(username.isEmpty() || username.isBlank()) {
             throw new NotFoundException("User not found");
         }
 

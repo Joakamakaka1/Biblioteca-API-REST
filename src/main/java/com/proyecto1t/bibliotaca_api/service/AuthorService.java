@@ -33,9 +33,10 @@ public class AuthorService {
     }
 
     public AuthorDTO findById(String id) {
-        if (id == null || id.isEmpty() || id.isBlank()) {
+        if (id.isEmpty() || id.isBlank()) {
             throw new NotFoundException("Author not found");
         }
+
         Author author = authorRepository.findById(stringToLong.method(id))
                 .orElseThrow(() -> new NotFoundException("Author not found"));
 
@@ -46,27 +47,29 @@ public class AuthorService {
         if (authorDTO == null) {
             throw new NotFoundException("Author not found");
         }
+
         Author author = mapper.toAuthorEntity(authorDTO);
         author = authorRepository.save(author);
         return mapper.toAuthorDTO(author);
     }
 
     public AuthorDTO updateAuthor(String id, AuthorDTO authorDTO) {
-        if (id == null || id.isEmpty() || id.isBlank()) {
+        if (id.isEmpty() || id.isBlank()) {
             throw new NotFoundException("Author not found");
         }
 
         Author existingAuthor = authorRepository.findById(stringToLong.method(id))
                 .orElseThrow(() -> new NotFoundException("Author not found"));
 
-        Author author = mapper.toAuthorEntity(authorDTO);
-        author.setId(existingAuthor.getId());
-        author = authorRepository.save(author);
-        return mapper.toAuthorDTO(author);
+        existingAuthor.setName(authorDTO.getName());
+        existingAuthor.setNationality(authorDTO.getNationality());
+
+        Author updatedAuthor = authorRepository.save(existingAuthor);
+        return mapper.toAuthorDTO(updatedAuthor);
     }
 
     public void deleteAuthor(String id) {
-        if (id == null || id.isEmpty() || id.isBlank()) {
+        if (id.isEmpty() || id.isBlank()) {
             throw new NotFoundException("Author not found");
         }
 

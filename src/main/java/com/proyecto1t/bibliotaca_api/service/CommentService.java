@@ -41,7 +41,7 @@ public class CommentService {
     }
 
     public CommentDTO findById(String id) {
-        if (id == null || id.isEmpty() || id.isBlank()) {
+        if (id.isEmpty() || id.isBlank()) {
             throw new NotFoundException("Comment not found");
         }
         Comment comment = commentRepository.findById(stringToLong.method(id))
@@ -67,11 +67,7 @@ public class CommentService {
     }
 
     public CommentDTO updateComment(String id, CommentDTO commentDTO) {
-        if (commentDTO == null) {
-            throw new NotFoundException("Comment not found");
-        }
-
-        if (id == null || id.isEmpty() || id.isBlank()) {
+        if (id.isEmpty() || id.isBlank()) {
             throw new NotFoundException("Comment not found");
         }
 
@@ -84,14 +80,16 @@ public class CommentService {
         Comment existingComment = commentRepository.findById(stringToLong.method(id))
                 .orElseThrow(() -> new NotFoundException("Comment not found"));
 
-        Comment comment = mapper.toCommentEntity(commentDTO, user, book);
-        comment.setId(existingComment.getId());
-        comment = commentRepository.save(comment);
+        existingComment.setContent(commentDTO.getContent());
+        existingComment.setUser(user);
+        existingComment.setBook(book);
+
+        Comment comment = commentRepository.save(existingComment);
         return mapper.toCommentDTO(comment);
     }
 
     public void deleteComment(String id) {
-        if (id == null || id.isEmpty() || id.isBlank()) {
+        if (id.isEmpty() || id.isBlank()) {
             throw new NotFoundException("Comment not found");
         }
 

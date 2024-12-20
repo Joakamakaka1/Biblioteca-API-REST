@@ -41,9 +41,10 @@ public class BookService {
     }
 
     public BookDTO findById(String id) {
-        if (id == null || id.isEmpty() || id.isBlank()) {
+        if (id.isEmpty() || id.isBlank()) {
             throw new NotFoundException("Book not found");
         }
+
         Book book = bookRepository.findById(stringToLong.method(id))
                 .orElseThrow(() -> new NotFoundException("Book not found"));
 
@@ -67,12 +68,8 @@ public class BookService {
     }
 
     public BookDTO updateBook(String id, BookDTO bookDTO) {
-        if (bookDTO == null) {
-            throw new NotFoundException("Book not found");
-        }
-
-        if (id == null || id.isEmpty() || id.isBlank()) {
-            throw new NotFoundException("Book not found");
+        if (id.isEmpty() || id.isBlank()) {
+            throw new NotFoundException("Book ID cannot be null or empty");
         }
 
         Author author = authorRepository.findById(bookDTO.getAuthorId())
@@ -81,19 +78,23 @@ public class BookService {
         Category category = categoryRepository.findById(bookDTO.getCategoryId())
                 .orElseThrow(() -> new NotFoundException("Category not found"));
 
-        Book existingBook = bookRepository.findById(stringToLong.method(id))
+        Book existingBook = bookRepository.findById(Long.parseLong(id))
                 .orElseThrow(() -> new NotFoundException("Book not found"));
 
-        Book book = mapper.toBookEntity(bookDTO, author, category);
-        book.setId(existingBook.getId());
-        book = bookRepository.save(book);
-        return mapper.toBookDTO(book);
+        existingBook.setTitle(bookDTO.getTitle());
+        existingBook.setIsbn(bookDTO.getIsbn());
+        existingBook.setAuthor(author);
+        existingBook.setCategory(category);
+
+        Book savedBook = bookRepository.save(existingBook);
+        return mapper.toBookDTO(savedBook);
     }
 
     public void deleteBook(String id) {
-        if (id == null || id.isEmpty() || id.isBlank()) {
+        if (id.isEmpty() || id.isBlank()) {
             throw new NotFoundException("Book not found");
         }
+
         Book book = bookRepository.findById(stringToLong.method(id))
                 .orElseThrow(() -> new NotFoundException("Book not found"));
 
