@@ -11,6 +11,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BookDTO {
+    private Long id;
+
     @NotEmpty(message = "Title cannot be empty")
     private String title;
 
@@ -19,8 +21,8 @@ public class BookDTO {
     private String isbn;
 
     @NotNull(message = "Author ID cannot be null")
-    private Long authorId;
+    private AuthorDTO authorId;
 
     @NotNull(message = "Author ID cannot be null")
-    private Long categoryId;
+    private CategoryDTO categoryId;
 }

@@ -21,8 +21,8 @@ public class ReservationDTO {
     private String status;
 
     @NotNull(message = "User ID cannot be null")
-    private Long userId;
+    private UserResponseDTO userId;
 
     @NotNull(message = "Book ID cannot be null")
-    private Long bookId;
+    private BookDTO bookId;
 }

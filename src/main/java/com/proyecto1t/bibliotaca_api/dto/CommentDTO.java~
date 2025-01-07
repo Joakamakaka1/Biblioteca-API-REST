@@ -16,8 +16,8 @@ public class CommentDTO {
     private String content;
 
     @NotNull(message = "User ID cannot be empty")
-    private UserResponseDTO userId;
+    private Long userId;
 
     @NotNull(message = "Book ID cannot be empty")
-    private BookDTO bookId;
+    private Long bookId;
 }

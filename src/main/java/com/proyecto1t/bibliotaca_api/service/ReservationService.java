@@ -55,10 +55,10 @@ public class ReservationService {
             throw new NotFoundException("Reservation not found");
         }
 
-        User userId = userRepository.findById(reservationDTO.getUserId())
+        User userId = userRepository.findById(reservationDTO.getUserId().getId())
                 .orElseThrow(() -> new NotFoundException("User not found"));
 
-        Book bookId = bookRepository.findById(reservationDTO.getBookId())
+        Book bookId = bookRepository.findById(reservationDTO.getBookId().getId())
                 .orElseThrow(() -> new NotFoundException("Book not found"));
 
         Reservation reservation = mapper.toReservationEntity(reservationDTO, userId, bookId);
@@ -71,10 +71,10 @@ public class ReservationService {
             throw new NotFoundException("Reservation not found");
         }
 
-        User user = userRepository.findById(reservationDTO.getUserId())
+        User user = userRepository.findById(reservationDTO.getUserId().getId())
                 .orElseThrow(() -> new NotFoundException("User not found"));
 
-        Book book = bookRepository.findById(reservationDTO.getBookId())
+        Book book = bookRepository.findById(reservationDTO.getBookId().getId())
                 .orElseThrow(() -> new NotFoundException("Book not found"));
 
         Reservation existingReservation = reservationRepository.findById(stringToLong.method(id))

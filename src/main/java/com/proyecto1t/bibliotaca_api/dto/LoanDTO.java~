@@ -21,8 +21,8 @@ public class LoanDTO {
     private LocalDate returnDate;
 
     @NotNull(message = "User ID cannot be null")
-    private UserResponseDTO userId;
+    private Long userId;
 
     @NotNull(message = "Book ID cannot be null")
-    private BookDTO bookId;
+    private Long bookId;
 }

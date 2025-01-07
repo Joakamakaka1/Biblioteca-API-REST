@@ -75,7 +75,7 @@ public class BookService {
         Author author = authorRepository.findById(bookDTO.getAuthorId().getId())
                 .orElseThrow(() -> new NotFoundException("Author not found"));
 
-        Category category = categoryRepository.findByName(bookDTO.getCategoryId().getName())
+        Category category = categoryRepository.findByName(bookDTO.getCategoryId())
                 .orElseThrow(() -> new NotFoundException("Category not found"));
 
         Book existingBook = bookRepository.findById(Long.parseLong(id))

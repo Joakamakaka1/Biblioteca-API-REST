@@ -26,15 +26,17 @@ public class Mapper {
 
     public BookDTO toBookDTO(Book book) {
         BookDTO bookDTO = new BookDTO();
+        bookDTO.setId(book.getId());
         bookDTO.setTitle(book.getTitle());
         bookDTO.setIsbn(book.getIsbn());
-        bookDTO.setAuthorId(book.getAuthor().getId());
-        bookDTO.setCategoryId(book.getCategory().getId());
+        bookDTO.setAuthorId(toAuthorDTO(book.getAuthor()));
+        bookDTO.setCategoryId(toCategoryDTO(book.getCategory()));
         return bookDTO;
     }
 
     public Book toBookEntity(BookDTO bookDTO, Author author, Category category) {
         Book book = new Book();
+        book.setId(bookDTO.getId());
         book.setTitle(bookDTO.getTitle());
         book.setIsbn(bookDTO.getIsbn());
         book.setAuthor(author);
@@ -57,8 +59,8 @@ public class Mapper {
     public CommentDTO toCommentDTO(Comment comment) {
         CommentDTO commentDTO = new CommentDTO();
         commentDTO.setContent(comment.getContent());
-        commentDTO.setUserId(comment.getUser().getId());
-        commentDTO.setBookId(comment.getBook().getId());
+        commentDTO.setUserId(toUserResponseDTO(comment.getUser()));
+        commentDTO.setBookId(toBookDTO(comment.getBook()));
         return commentDTO;
     }
 
@@ -74,8 +76,8 @@ public class Mapper {
         LoanDTO loanDTO = new LoanDTO();
         loanDTO.setLoanDate(loan.getLoanDate());
         loanDTO.setReturnDate(loan.getReturnDate());
-        loanDTO.setUserId(loan.getUser().getId());
-        loanDTO.setBookId(loan.getBook().getId());
+        loanDTO.setUserId(toUserResponseDTO(loan.getUser()));
+        loanDTO.setBookId(toBookDTO(loan.getBook()));
         return loanDTO;
     }
 
@@ -91,10 +93,10 @@ public class Mapper {
     // Reservation
     public ReservationDTO toReservationDTO(Reservation reservation) {
         ReservationDTO reservationDTO = new ReservationDTO();
-        reservationDTO.setUserId(reservation.getUser().getId());
+        reservationDTO.setUserId(toUserResponseDTO(reservation.getUser()));
         reservationDTO.setReservationDate(reservation.getReservationDate());
         reservationDTO.setStatus(reservation.getStatus().toString());
-        reservationDTO.setBookId(reservation.getBook().getId());
+        reservationDTO.setBookId(toBookDTO(reservation.getBook()));
         return reservationDTO;
     }
 

@@ -55,10 +55,10 @@ public class LoanService {
             throw new NotFoundException("Loan not found");
         }
 
-        User userId = userRepository.findById(loanDTO.getUserId())
+        User userId = userRepository.findById(loanDTO.getUserId().getId())
                 .orElseThrow(() -> new NotFoundException("User not found"));
 
-        Book bookId = bookRepository.findById(loanDTO.getBookId())
+        Book bookId = bookRepository.findById(loanDTO.getBookId().getId())
                 .orElseThrow(() -> new NotFoundException("Book not found"));
 
         Loan loan = mapper.toLoanEntity(loanDTO, userId, bookId);
@@ -71,10 +71,10 @@ public class LoanService {
             throw new NotFoundException("Loan not found");
         }
 
-        User user = userRepository.findById(loanDTO.getUserId())
+        User user = userRepository.findById(loanDTO.getUserId().getId())
                 .orElseThrow(() -> new NotFoundException("User not found"));
 
-        Book book = bookRepository.findById(loanDTO.getBookId())
+        Book book = bookRepository.findById(loanDTO.getBookId().getId())
                 .orElseThrow(() -> new NotFoundException("Book not found"));
 
         Loan existingLoan = loanRepository.findById(stringToLong.method(id))
