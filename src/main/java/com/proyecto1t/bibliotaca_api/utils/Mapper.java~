@@ -22,7 +22,7 @@ public class Mapper {
         author.setNationality(authorDTO.getNationality());
         return author;
     }
-
+    
     public BookDTO toBookDTO(Book book) {
         BookDTO bookDTO = new BookDTO();
         bookDTO.setTitle(book.getTitle());
@@ -34,6 +34,7 @@ public class Mapper {
 
     public Book toBookEntity(BookDTO bookDTO, Author author, Category category) {
         Book book = new Book();
+        book.setId(bookDTO.getId());
         book.setTitle(bookDTO.getTitle());
         book.setIsbn(bookDTO.getIsbn());
         book.setAuthor(author);

@@ -1,6 +1,7 @@
 package com.proyecto1t.bibliotaca_api.service;
 
 import com.proyecto1t.bibliotaca_api.dto.AuthorDTO;
+import com.proyecto1t.bibliotaca_api.exceptions.DuplicateException;
 import com.proyecto1t.bibliotaca_api.exceptions.NotFoundException;
 import com.proyecto1t.bibliotaca_api.model.Author;
 import com.proyecto1t.bibliotaca_api.repository.AuthorRepository;
@@ -59,7 +60,7 @@ public class AuthorService {
         }
 
         Author existingAuthor = authorRepository.findById(stringToLong.method(id))
-                .orElseThrow(() -> new NotFoundException("Author not found"));
+                .orElseThrow(() -> new DuplicateException("Author not found"));
 
         existingAuthor.setName(authorDTO.getName());
         existingAuthor.setNationality(authorDTO.getNationality());

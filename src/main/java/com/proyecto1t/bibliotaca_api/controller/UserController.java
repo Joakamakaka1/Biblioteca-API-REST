@@ -47,7 +47,7 @@ public class UserController {
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
-    @GetMapping("/{username}") // -> http://localhost:8080/users/1
+    @GetMapping("/{username}") // -> http://localhost:8080/users/Joaquin
     public ResponseEntity<UserResponseDTO> getUserById(@PathVariable String username) {
         UserResponseDTO user = userService.findByUsername(username);
         return new ResponseEntity<>(user, HttpStatus.OK);

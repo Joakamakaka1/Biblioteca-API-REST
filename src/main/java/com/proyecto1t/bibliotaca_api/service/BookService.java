@@ -1,6 +1,7 @@
 package com.proyecto1t.bibliotaca_api.service;
 
 import com.proyecto1t.bibliotaca_api.dto.BookDTO;
+import com.proyecto1t.bibliotaca_api.exceptions.DuplicateException;
 import com.proyecto1t.bibliotaca_api.exceptions.NotFoundException;
 import com.proyecto1t.bibliotaca_api.model.Author;
 import com.proyecto1t.bibliotaca_api.model.Book;
@@ -62,6 +63,10 @@ public class BookService {
         Category categoryId = categoryRepository.findByName(bookDTO.getCategoryId().getName())
                 .orElseThrow(() -> new NotFoundException("Category not found"));
 
+        if(bookRepository.findByIsbn(bookDTO.getIsbn()).isPresent()) {
+            throw new DuplicateException("Isbn already exists");
+        }
+
         Book book = mapper.toBookEntity(bookDTO, authorId, categoryId);
         book = bookRepository.save(book);
         return mapper.toBookDTO(book);
@@ -79,7 +84,7 @@ public class BookService {
                 .orElseThrow(() -> new NotFoundException("Category not found"));
 
         Book existingBook = bookRepository.findById(Long.parseLong(id))
-                .orElseThrow(() -> new NotFoundException("Book not found"));
+                .orElseThrow(() -> new DuplicateException("Book not found"));
 
         existingBook.setTitle(bookDTO.getTitle());
         existingBook.setIsbn(bookDTO.getIsbn());

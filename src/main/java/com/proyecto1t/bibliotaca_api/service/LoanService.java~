@@ -76,7 +76,7 @@ public class LoanService {
                 .orElseThrow(() -> new NotFoundException("User not found"));
 
         Book book = bookRepository.findByIsbn(loanDTO.getBookId().getIsbn())
-                .orElseThrow(() -> new NotFoundException("Book not found. Check isbn"));
+                .orElseThrow(() -> new NotFoundException("Book not found"));
 
         Loan existingLoan = loanRepository.findById(stringToLong.method(id))
                 .orElseThrow(() -> new DuplicateException("Loan not found"));

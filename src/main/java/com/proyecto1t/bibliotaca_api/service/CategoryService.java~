@@ -1,7 +1,6 @@
 package com.proyecto1t.bibliotaca_api.service;
 
 import com.proyecto1t.bibliotaca_api.dto.CategoryDTO;
-import com.proyecto1t.bibliotaca_api.exceptions.DuplicateException;
 import com.proyecto1t.bibliotaca_api.exceptions.NotFoundException;
 import com.proyecto1t.bibliotaca_api.model.Category;
 import com.proyecto1t.bibliotaca_api.repository.CategoryRepository;
@@ -59,7 +58,7 @@ public class CategoryService {
         }
 
         Category existingCategory = categoryRepository.findById(stringToLong.method(id))
-                .orElseThrow(() -> new DuplicateException("Category not found"));
+                .orElseThrow(() -> new NotFoundException("Category not found"));
 
         existingCategory.setName(categoryDTO.getName());
 

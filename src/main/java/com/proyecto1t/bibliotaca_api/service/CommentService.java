@@ -1,6 +1,7 @@
 package com.proyecto1t.bibliotaca_api.service;
 
 import com.proyecto1t.bibliotaca_api.dto.CommentDTO;
+import com.proyecto1t.bibliotaca_api.exceptions.DuplicateException;
 import com.proyecto1t.bibliotaca_api.exceptions.NotFoundException;
 import com.proyecto1t.bibliotaca_api.model.Book;
 import com.proyecto1t.bibliotaca_api.model.Comment;
@@ -58,8 +59,8 @@ public class CommentService {
         User userId = userRepository.findById(commentDTO.getUserId().getId())
                 .orElseThrow(() -> new NotFoundException("User not found"));
 
-        Book bookId = bookRepository.findById(commentDTO.getBookId().getId())
-                .orElseThrow(() -> new NotFoundException("Book not found"));
+        Book bookId = bookRepository.findByIsbn(commentDTO.getBookId().getIsbn())
+                .orElseThrow(() -> new NotFoundException("Book not found. Check isbn"));
 
         Comment comment = mapper.toCommentEntity(commentDTO, userId, bookId);
         comment = commentRepository.save(comment);
@@ -74,11 +75,11 @@ public class CommentService {
         User user = userRepository.findById(commentDTO.getUserId().getId())
                 .orElseThrow(() -> new NotFoundException("User not found"));
 
-        Book book = bookRepository.findById(commentDTO.getBookId().getId())
-                .orElseThrow(() -> new NotFoundException("Book not found"));
+        Book book = bookRepository.findByIsbn(commentDTO.getBookId().getIsbn())
+                .orElseThrow(() -> new NotFoundException("Book not found. Check isbn"));
 
         Comment existingComment = commentRepository.findById(stringToLong.method(id))
-                .orElseThrow(() -> new NotFoundException("Comment not found"));
+                .orElseThrow(() -> new DuplicateException("Comment already exists"));
 
         existingComment.setContent(commentDTO.getContent());
         existingComment.setUser(user);

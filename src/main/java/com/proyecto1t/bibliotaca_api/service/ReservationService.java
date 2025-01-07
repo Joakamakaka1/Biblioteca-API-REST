@@ -1,6 +1,7 @@
 package com.proyecto1t.bibliotaca_api.service;
 
 import com.proyecto1t.bibliotaca_api.dto.ReservationDTO;
+import com.proyecto1t.bibliotaca_api.exceptions.DuplicateException;
 import com.proyecto1t.bibliotaca_api.exceptions.NotFoundException;
 import com.proyecto1t.bibliotaca_api.model.Book;
 import com.proyecto1t.bibliotaca_api.model.Reservation;
@@ -58,8 +59,8 @@ public class ReservationService {
         User userId = userRepository.findById(reservationDTO.getUserId().getId())
                 .orElseThrow(() -> new NotFoundException("User not found"));
 
-        Book bookId = bookRepository.findById(reservationDTO.getBookId().getId())
-                .orElseThrow(() -> new NotFoundException("Book not found"));
+        Book bookId = bookRepository.findByIsbn(reservationDTO.getBookId().getIsbn())
+                .orElseThrow(() -> new NotFoundException("Book not found. Check isbn"));
 
         Reservation reservation = mapper.toReservationEntity(reservationDTO, userId, bookId);
         reservation = reservationRepository.save(reservation);
@@ -74,11 +75,11 @@ public class ReservationService {
         User user = userRepository.findById(reservationDTO.getUserId().getId())
                 .orElseThrow(() -> new NotFoundException("User not found"));
 
-        Book book = bookRepository.findById(reservationDTO.getBookId().getId())
-                .orElseThrow(() -> new NotFoundException("Book not found"));
+        Book book = bookRepository.findByIsbn(reservationDTO.getBookId().getIsbn())
+                .orElseThrow(() -> new NotFoundException("Book not found. Check isbn"));
 
         Reservation existingReservation = reservationRepository.findById(stringToLong.method(id))
-                .orElseThrow(() -> new NotFoundException("Reservation not found"));
+                .orElseThrow(() -> new DuplicateException("Reservation not found"));
 
         existingReservation.setReservationDate(reservationDTO.getReservationDate());
         existingReservation.setStatus(Reservation.ReservationStatus.valueOf(reservationDTO.getStatus())); // convertir a enum

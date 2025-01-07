@@ -72,15 +72,7 @@ public class UserService implements UserDetailsService {
     public UserResponseDTO findByUsername(String username) {
         com.proyecto1t.bibliotaca_api.model.User user = userRepository
                 .findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
-
-        return mapper.toUserResponseDTO(user);
-    }
-
-    public UserResponseDTO findByEmail(String email) {
-        com.proyecto1t.bibliotaca_api.model.User user = userRepository
-                .findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+                .orElseThrow(() -> new NotFoundException("User not found"));
 
         return mapper.toUserResponseDTO(user);
     }
