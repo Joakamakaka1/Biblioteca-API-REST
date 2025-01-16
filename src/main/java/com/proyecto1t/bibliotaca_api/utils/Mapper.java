@@ -9,7 +9,6 @@ public class Mapper {
 
     public AuthorDTO toAuthorDTO(Author author) {
         AuthorDTO authorDTO = new AuthorDTO();
-        authorDTO.setId(author.getId());
         authorDTO.setName(author.getName());
         authorDTO.setNationality(author.getNationality());
         return authorDTO;
@@ -17,7 +16,6 @@ public class Mapper {
 
     public Author toAuthorEntity(AuthorDTO authorDTO) {
         Author author = new Author();
-        author.setId(authorDTO.getId());
         author.setName(authorDTO.getName());
         author.setNationality(authorDTO.getNationality());
         return author;

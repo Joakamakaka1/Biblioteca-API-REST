@@ -9,8 +9,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AuthorDTO {
-    private Long id;
-
     @NotEmpty(message = "Author name cannot be empty")
     private String name;
 

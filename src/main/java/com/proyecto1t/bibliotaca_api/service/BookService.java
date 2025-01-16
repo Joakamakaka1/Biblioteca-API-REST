@@ -57,7 +57,7 @@ public class BookService {
             throw new NotFoundException("Book not found");
         }
 
-        Author authorId = authorRepository.findById(bookDTO.getAuthorId().getId())
+        Author authorId = authorRepository.findByName(bookDTO.getAuthorId().getName())
                 .orElseThrow(() -> new NotFoundException("Author not found"));
 
         Category categoryId = categoryRepository.findByName(bookDTO.getCategoryId().getName())
@@ -77,7 +77,7 @@ public class BookService {
             throw new NotFoundException("Book ID cannot be null or empty");
         }
 
-        Author author = authorRepository.findById(bookDTO.getAuthorId().getId())
+        Author author = authorRepository.findByName(bookDTO.getAuthorId().getName())
                 .orElseThrow(() -> new NotFoundException("Author not found"));
 
         Category category = categoryRepository.findByName(bookDTO.getCategoryId().getName())
