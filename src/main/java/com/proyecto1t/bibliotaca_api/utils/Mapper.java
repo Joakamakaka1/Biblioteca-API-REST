@@ -108,7 +108,7 @@ public class Mapper {
         userResponseDTO.setId(user.getId());
         userResponseDTO.setUsername(user.getUsername());
         userResponseDTO.setEmail(user.getEmail());
-        userResponseDTO.setRole(user.getRole().name());
+        userResponseDTO.setRole(user.getRoles().name());
         return userResponseDTO;
     }
 
@@ -117,7 +117,7 @@ public class Mapper {
         user.setId(userResponseDTO.getId());
         user.setUsername(userResponseDTO.getUsername());
         user.setEmail(userResponseDTO.getEmail());
-        user.setRole(userResponseDTO.getRole().equals("ADMIN") ? User.Role.ADMIN : User.Role.CLIENT);
+        user.setRoles(userResponseDTO.getRole().equals("ADMIN") ? User.Roles.ADMIN : User.Roles.USER);
         return user;
     }
 }

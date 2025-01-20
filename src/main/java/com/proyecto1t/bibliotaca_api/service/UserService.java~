@@ -108,7 +108,7 @@ public class UserService implements UserDetailsService {
         user.setUsername(userRegisterDTO.getUsername());
         user.setEmail(userRegisterDTO.getEmail());
         user.setPassword(passwordEncoder.encode(userRegisterDTO.getPassword()));
-        user.setRoles(userRegisterDTO.getRole().equals("ADMIN") ? com.proyecto1t.bibliotaca_api.model.User.Roles.ADMIN : com.proyecto1t.bibliotaca_api.model.User.Roles.USER);
+        user.setRole(userRegisterDTO.getRole().equals("ADMIN") ? com.proyecto1t.bibliotaca_api.model.User.Roles.ADMIN : com.proyecto1t.bibliotaca_api.model.User.Roles.USER);
 
         userRepository.save(user);
         return mapper.toUserResponseDTO(user);

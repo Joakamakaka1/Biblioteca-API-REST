@@ -49,7 +49,7 @@ public class AuthorizationConfig {
 
             // Extrae el nombre de usuario desde el URI de la solicitud.
             String path = object.getRequest().getRequestURI();
-            String username = path.replaceAll("/cliente/", "");
+            String username = path.replaceAll("/users/", "");
 
             User user = null;
             try {

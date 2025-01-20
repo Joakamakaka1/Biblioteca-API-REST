@@ -39,9 +39,9 @@ public class User {
     private List<Reservation> reservations;
 
     @Enumerated(EnumType.STRING)
-    private Role role;
+    private Roles roles;
 
-    public enum Role {
-        ADMIN, CLIENT
+    public enum Roles {
+        ADMIN, USER
     }
 }

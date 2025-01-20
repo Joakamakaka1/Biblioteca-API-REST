@@ -70,29 +70,29 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.DELETE, "/categories/{id}").hasRole("ADMIN")
 
                         // Rutas de usuarios
-                        .requestMatchers(HttpMethod.GET, "/users").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/users/").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/users/{username}").access(authenticationManager.getUsuarioByUsernameManager())
                         .requestMatchers(HttpMethod.PUT, "/users/{username}").access(authenticationManager.getUsuarioByUsernameManager())
                         .requestMatchers(HttpMethod.DELETE, "/users/{username}").access(authenticationManager.getUsuarioByUsernameManager())
 
                         // Rutas de préstamos
-                        .requestMatchers(HttpMethod.GET, "/loans").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/loans/").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/loans/{id}").access(authenticationManager.getLoansByIdManager())
                         .requestMatchers(HttpMethod.POST, "/loans").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/loans/{id}").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/loans/{id}").hasRole("ADMIN")
 
                         // Rutas de reservas
-                        .requestMatchers(HttpMethod.GET, "/reservations").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/reservations/").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/reservations/{id}").access(authenticationManager.getReservationsByIdManager())
                         .requestMatchers(HttpMethod.POST, "/reservations").access(authenticationManager.getReservationsByIdManager())
                         .requestMatchers(HttpMethod.PUT, "/reservations/{id}").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/reservations/{id}").hasRole("ADMIN")
 
                         // Rutas de comentarios
-                        .requestMatchers(HttpMethod.GET, "/comments").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/comments/").permitAll()
                         .requestMatchers(HttpMethod.GET, "/comments/{id}").access(authenticationManager.getComentariosByIdManager())
-                        .requestMatchers(HttpMethod.POST, "/comments").authenticated()
+                        .requestMatchers(HttpMethod.POST, "/comments").permitAll()
                         .requestMatchers(HttpMethod.PUT, "/comments/{id}").access(authenticationManager.getComentariosByIdManager())
                         .requestMatchers(HttpMethod.DELETE, "/comments/{id}").access(authenticationManager.getComentariosByIdManager())
 
