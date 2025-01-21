@@ -84,7 +84,7 @@ public class AuthorizationConfig {
 
             // Extrae el ID del préstamo desde el URI de la solicitud.
             String path = object.getRequest().getRequestURI();
-            String loanId = path.replaceAll("/loans/", "");
+            String loanId = path.replaceAll("/loan/", "");
             Long id = stringToLong.method(loanId);
 
             if(id == null) {
@@ -131,7 +131,7 @@ public class AuthorizationConfig {
             }
 
             String path = object.getRequest().getRequestURI();
-            String reservationId = path.replaceAll("/reservations/", "");
+            String reservationId = path.replaceAll("/reservation/", "");
             Long id = stringToLong.method(reservationId);
 
             if(id == null) {
@@ -176,7 +176,7 @@ public class AuthorizationConfig {
             }
 
             String path = object.getRequest().getRequestURI();
-            String commentId = path.replaceAll("/comentarios/", "");
+            String commentId = path.replaceAll("/comment/", "");
             Long id = stringToLong.method(commentId);
 
             if(id == null) {

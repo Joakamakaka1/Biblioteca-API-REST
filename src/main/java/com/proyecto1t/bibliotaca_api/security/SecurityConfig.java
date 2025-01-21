@@ -51,23 +51,23 @@ public class SecurityConfig {
                         // Rutas de autores
                         .requestMatchers(HttpMethod.GET, "/authors/").permitAll()
                         .requestMatchers(HttpMethod.GET, "/authors/{id}").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/authors").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/authors/").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/authors/{id}").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/authors/{id}").hasRole("ADMIN")
 
                         // Rutas de libros
                         .requestMatchers(HttpMethod.GET, "/books/").permitAll()
                         .requestMatchers(HttpMethod.GET, "/books/{id}").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/books").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/books/").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/books/{id}").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/books/{id}").hasRole("ADMIN")
 
                         // Rutas de categorías
-                        .requestMatchers(HttpMethod.GET, "/categories/{id}").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/categories/").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/categories").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.PUT, "/categories/{id}").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.DELETE, "/categories/{id}").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/category/{id}").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/category/").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/category/").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/category/{id}").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/category/{id}").hasRole("ADMIN")
 
                         // Rutas de usuarios
                         .requestMatchers(HttpMethod.GET, "/users/").hasRole("ADMIN")
@@ -76,25 +76,25 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.DELETE, "/users/{username}").access(authenticationManager.getUsuarioByUsernameManager())
 
                         // Rutas de préstamos
-                        .requestMatchers(HttpMethod.GET, "/loans/").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.GET, "/loans/{id}").access(authenticationManager.getLoansByIdManager())
-                        .requestMatchers(HttpMethod.POST, "/loans").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.PUT, "/loans/{id}").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.DELETE, "/loans/{id}").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/loan/").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/loan/{id}").access(authenticationManager.getLoansByIdManager())
+                        .requestMatchers(HttpMethod.POST, "/loan/").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/loan/{id}").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/loan/{id}").hasRole("ADMIN")
 
                         // Rutas de reservas
-                        .requestMatchers(HttpMethod.GET, "/reservations/").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.GET, "/reservations/{id}").access(authenticationManager.getReservationsByIdManager())
-                        .requestMatchers(HttpMethod.POST, "/reservations").access(authenticationManager.getReservationsByIdManager())
-                        .requestMatchers(HttpMethod.PUT, "/reservations/{id}").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.DELETE, "/reservations/{id}").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/reservation/").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/reservation/{id}").access(authenticationManager.getReservationsByIdManager())
+                        .requestMatchers(HttpMethod.POST, "/reservation/").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/reservation/{id}").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/reservation/{id}").hasRole("ADMIN")
 
                         // Rutas de comentarios
-                        .requestMatchers(HttpMethod.GET, "/comments/").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/comments/{id}").access(authenticationManager.getComentariosByIdManager())
-                        .requestMatchers(HttpMethod.POST, "/comments").permitAll()
-                        .requestMatchers(HttpMethod.PUT, "/comments/{id}").access(authenticationManager.getComentariosByIdManager())
-                        .requestMatchers(HttpMethod.DELETE, "/comments/{id}").access(authenticationManager.getComentariosByIdManager())
+                        .requestMatchers(HttpMethod.GET, "/comment/").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/comment/{id}").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/comment/").permitAll()
+                        .requestMatchers(HttpMethod.PUT, "/comment/{id}").access(authenticationManager.getComentariosByIdManager())
+                        .requestMatchers(HttpMethod.DELETE, "/comment/{id}").access(authenticationManager.getComentariosByIdManager())
 
                         // Cualquier otra ruta
                         .anyRequest().authenticated()
