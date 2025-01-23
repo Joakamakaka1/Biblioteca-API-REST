@@ -56,7 +56,7 @@ public class LoanService {
             throw new NotFoundException("Loan not found");
         }
 
-        User userId = userRepository.findById(loanDTO.getUserId().getId())
+        User userId = userRepository.findByUsername(loanDTO.getUserId().getUsername())
                 .orElseThrow(() -> new NotFoundException("User not found"));
 
         Book bookId = bookRepository.findByIsbn(loanDTO.getBookId().getIsbn())
@@ -76,7 +76,7 @@ public class LoanService {
                 .orElseThrow(() -> new NotFoundException("User not found"));
 
         Book book = bookRepository.findByIsbn(loanDTO.getBookId().getIsbn())
-                .orElseThrow(() -> new NotFoundException("Book not found"));
+                .orElseThrow(() -> new NotFoundException("Book not found. Check isbn"));
 
         Loan existingLoan = loanRepository.findById(stringToLong.method(id))
                 .orElseThrow(() -> new DuplicateException("Loan not found"));

@@ -4,6 +4,7 @@ import com.proyecto1t.bibliotaca_api.dto.UserRegisterDTO;
 import com.proyecto1t.bibliotaca_api.dto.UserResponseDTO;
 import com.proyecto1t.bibliotaca_api.exceptions.BadRequestException;
 import com.proyecto1t.bibliotaca_api.exceptions.DuplicateException;
+import com.proyecto1t.bibliotaca_api.exceptions.MethodArgumentNotValidException;
 import com.proyecto1t.bibliotaca_api.exceptions.NotFoundException;
 import com.proyecto1t.bibliotaca_api.repository.UserRepository;
 import com.proyecto1t.bibliotaca_api.utils.Mapper;
@@ -47,16 +48,20 @@ public class UserService implements UserDetailsService {
     }
 
     public UserRegisterDTO registerUser(UserRegisterDTO userRegisterDTO) {
-        if(userRepository.findByEmail(userRegisterDTO.getEmail()).isPresent()) {
+        if (userRepository.findByEmail(userRegisterDTO.getEmail()).isPresent()) {
             throw new DuplicateException("Email already exists");
         }
 
-        if(userRepository.findByUsername(userRegisterDTO.getUsername()).isPresent()) {
-            throw new DuplicateException("First name already exists");
+        if (userRepository.findByUsername(userRegisterDTO.getUsername()).isPresent()) {
+            throw new DuplicateException("Username already exists");
         }
 
-        if(!userRegisterDTO.getPassword().equals(userRegisterDTO.getConfirmPassword())) {
+        if (!userRegisterDTO.getPassword().equals(userRegisterDTO.getConfirmPassword())) {
             throw new BadRequestException("Passwords do not match");
+        }
+
+        if(!userRegisterDTO.getRole().equals("USER") && !userRegisterDTO.getRole().equals("ADMIN")) {
+            throw new BadRequestException("Role must be USER or ADMIN");
         }
 
         com.proyecto1t.bibliotaca_api.model.User user = new com.proyecto1t.bibliotaca_api.model.User();
@@ -93,12 +98,16 @@ public class UserService implements UserDetailsService {
             throw new DuplicateException("Email already exists");
         }
 
-        if(userRepository.findByUsername(userRegisterDTO.getUsername()).isPresent()) {
-            throw new DuplicateException("First name already exists");
+        if (userRepository.findByUsername(userRegisterDTO.getUsername()).isPresent()) {
+            throw new DuplicateException("Username already exists");
         }
 
         if(username.isEmpty() || username.isBlank()) {
             throw new NotFoundException("User not found");
+        }
+
+        if(!userRegisterDTO.getRole().equals("USER") && !userRegisterDTO.getRole().equals("ADMIN")) {
+            throw new BadRequestException("Role must be USER or ADMIN");
         }
 
         com.proyecto1t.bibliotaca_api.model.User user = userRepository

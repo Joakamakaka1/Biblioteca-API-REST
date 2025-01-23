@@ -105,7 +105,6 @@ public class Mapper {
 
     public UserResponseDTO toUserResponseDTO(User user) {
         UserResponseDTO userResponseDTO = new UserResponseDTO();
-        userResponseDTO.setId(user.getId());
         userResponseDTO.setUsername(user.getUsername());
         userResponseDTO.setEmail(user.getEmail());
         userResponseDTO.setRole(user.getRoles().name());
@@ -114,7 +113,6 @@ public class Mapper {
 
     public User toUserEntity(UserResponseDTO userResponseDTO) {
         User user = new User();
-        user.setId(userResponseDTO.getId());
         user.setUsername(userResponseDTO.getUsername());
         user.setEmail(userResponseDTO.getEmail());
         user.setRoles(userResponseDTO.getRole().equals("ADMIN") ? User.Roles.ADMIN : User.Roles.USER);

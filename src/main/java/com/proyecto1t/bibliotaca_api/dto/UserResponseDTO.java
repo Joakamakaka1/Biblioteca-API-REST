@@ -10,8 +10,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserResponseDTO {
-    private Long id;
-
     @NotEmpty(message = "Username cannot be empty")
     private String username;
 

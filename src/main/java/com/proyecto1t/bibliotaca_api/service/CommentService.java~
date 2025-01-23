@@ -72,7 +72,7 @@ public class CommentService {
             throw new NotFoundException("Comment not found");
         }
 
-        User user = userRepository.findByUsername(commentDTO.getUserId().getUsername())
+        User user = userRepository.findById(commentDTO.getUserId().getId())
                 .orElseThrow(() -> new NotFoundException("User not found"));
 
         Book book = bookRepository.findByIsbn(commentDTO.getBookId().getIsbn())

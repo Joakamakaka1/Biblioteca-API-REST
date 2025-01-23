@@ -24,6 +24,7 @@ public class Author {
     @Column(unique = true, nullable = false)
     private String name;
 
+    @NotEmpty(message = "Nationality cannot be empty")
     private String nationality;
 
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)

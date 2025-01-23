@@ -192,21 +192,26 @@ La lógica de negocio está centrada en los siguientes aspectos clave:
 
 ## Validación de Campos
 
-| **Entidad**         | **Campo**         | **Regla de Validación**                                                                                                     |
-|----------------------|-------------------|-----------------------------------------------------------------------------------------------------------------------------|
-| **Author**           | `name`           | Debe ser único, no estar vacío, y contener solo letras y espacios (`regex: ^[a-zA-ZÀ-ÿ\s]{2,50}$`).                          |
-| **Book**             | `title`          | No puede estar vacío, debe tener entre 1 y 100 caracteres (`regex: ^.{1,100}$`).                                            |
-|                      | `isbn`           | Debe tener exactamente 13 caracteres, ser único y no estar vacío (`regex: ^\d{13}$`).                                       |
-|                      | `author`         | Debe referenciar un autor existente (validación en base a la clave foránea).                                                |
-|                      | `category`       | Debe referenciar una categoría existente (validación en base a la clave foránea).                                           |
-| **Category**         | `name`           | Debe ser único, no estar vacío, y contener solo letras y espacios (`regex: ^[a-zA-ZÀ-ÿ\s]{2,50}$`).                          |
-| **User**             | `email`          | Debe tener un formato válido y ser único (`regex: ^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$`).                        |
-|                      | `password`       | Debe tener al menos 6 caracteres, incluyendo una letra mayúscula, un número y un carácter especial (`regex: ^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$`). |
-|                      | `role`           | Debe ser uno de los valores permitidos (`regex: ^(ADMIN|CLIENT)$`).                                                         |
-| **Loan/Reservation** | `date`           | No puede ser en el pasado; debe tener formato válido de fecha ISO 8601 (`regex: ^\d{4}-\d{2}-\d{2}$`).                       |
-|                      | `user`           | Debe referenciar un usuario existente (validación en base a la clave foránea).                                              |
-| **Comment**          | `content`        | No puede superar los 500 caracteres y no debe estar vacío (`regex: ^.{1,500}$`).                                            |
-|                      | `book`           | Debe referenciar un libro existente (validación en base a la clave foránea).                                                |
+| **Entidad**          | **Campo**     | **Regla de Validación**                                                                               |
+|----------------------|---------------|-------------------------------------------------------------------------------------------------------|
+| **Author**           | `name`        | Debe ser único, no estar vacío.                                                                       |
+|                      | `nationality` | No estar vacío.                                                                                       |
+| **Book**             | `title`       | No puede estar vacío, debe tener entre 1 y 100 caracteres.                                            |
+|                      | `isbn`        | Debe tener exactamente 13 caracteres, ser único y no estar vacío.                                     |
+|                      | `author`      | Debe referenciar un autor existente (validación en base a la clave foránea).                          |
+|                      | `category`    | Debe referenciar una categoría existente (validación en base a la clave foránea).                     |
+| **Category**         | `name`        | Debe ser único, no estar vacío.                                                                       |
+| **User**             | `email`       | Debe tener un formato válido y ser único (`regex: ^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$`). |
+|                      | `password`    | Debe tener al menos 6 caracteres.                                                                     |
+|                      | `name`        | Debe ser único, no estar vacio.                                                                       |
+|                      | `role`        | Debe ser uno de los valores permitidos, ADMIN o USER.                                                 |CLIENT)$`).                                                         |
+| **Loan/Reservation** | `date`        | No puede ser en el pasado; debe tener formato válido de fecha.                                        |
+|                      | `user`        | Debe referenciar un usuario existente (validación en base a la clave foránea).                        |
+|                      | `book`        | Debe referenciar un libro existente (validación en base a la clave foránea).                          |
+|                      | `status`      | No estar vacio y ser PENDING, COMPLETE or CANCELLED.                                                  |
+| **Comment**          | `content`     | No puede superar los 500 caracteres y no debe estar vacío.                                            |
+|                      | `book`        | Debe referenciar un libro existente (validación en base a la clave foránea).                          |
+|                      | `user`        | Debe referenciar un usuario existente (validación en base a la clave foránea).                        |
 
 ---
 

@@ -1,6 +1,7 @@
 package com.proyecto1t.bibliotaca_api.service;
 
 import com.proyecto1t.bibliotaca_api.dto.ReservationDTO;
+import com.proyecto1t.bibliotaca_api.exceptions.BadRequestException;
 import com.proyecto1t.bibliotaca_api.exceptions.DuplicateException;
 import com.proyecto1t.bibliotaca_api.exceptions.NotFoundException;
 import com.proyecto1t.bibliotaca_api.model.Book;
@@ -56,7 +57,11 @@ public class ReservationService {
             throw new NotFoundException("Reservation not found");
         }
 
-        User userId = userRepository.findById(reservationDTO.getUserId().getId())
+        if(!reservationDTO.getStatus().equals("PENDING") && !reservationDTO.getStatus().equals("COMPLETE") && !reservationDTO.getStatus().equals("CANCELLED")){
+            throw new BadRequestException("Status must be PENDING, COMPLETE or CANCELLED");
+        }
+
+        User userId = userRepository.findByUsername(reservationDTO.getUserId().getUsername())
                 .orElseThrow(() -> new NotFoundException("User not found"));
 
         Book bookId = bookRepository.findByIsbn(reservationDTO.getBookId().getIsbn())
@@ -72,7 +77,7 @@ public class ReservationService {
             throw new NotFoundException("Reservation not found");
         }
 
-        User user = userRepository.findById(reservationDTO.getUserId().getId())
+        User user = userRepository.findByUsername(reservationDTO.getUserId().getUsername())
                 .orElseThrow(() -> new NotFoundException("User not found"));
 
         Book book = bookRepository.findByIsbn(reservationDTO.getBookId().getIsbn())

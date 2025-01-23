@@ -6,13 +6,11 @@ import java.util.List;
 
 @Getter
 public class MethodArgumentNotValidException extends RuntimeException{
-    private static final String DESCRIPTION = "Method argument not valid";
-
-    private List<String> validationErrors; // Lista de errores
+    private List<String> validationErrors; // Errores de validación
 
     // Constructor que acepta la lista de errores
     public MethodArgumentNotValidException(List<String> validationErrors) {
-        super(DESCRIPTION + ": " + String.join(", ", validationErrors));
+        super(String.join(", ", validationErrors));
         this.validationErrors = validationErrors;
     }
 }

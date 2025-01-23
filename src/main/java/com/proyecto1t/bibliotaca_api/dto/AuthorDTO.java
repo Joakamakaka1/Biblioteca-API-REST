@@ -12,5 +12,6 @@ public class AuthorDTO {
     @NotEmpty(message = "Author name cannot be empty")
     private String name;
 
+    @NotEmpty(message = "Nationality cannot be empty")
     private String nationality;
 }

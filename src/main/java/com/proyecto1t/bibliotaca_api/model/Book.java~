@@ -20,12 +20,14 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Size(max = 100, message = "Title cannot exceed 100 characters")
     @NotEmpty(message = "Title cannot be empty")
+    @Column(unique = true, nullable = false)
     private String title;
 
     @Size(min = 13, max = 13, message = "ISBN must be exactly 13 characters long")
     @NotEmpty(message = "ISBN cannot be empty")
-    @Column(, nullable = false)
+    @Column(unique = true, nullable = false)
     private String isbn;
 
     @ManyToOne

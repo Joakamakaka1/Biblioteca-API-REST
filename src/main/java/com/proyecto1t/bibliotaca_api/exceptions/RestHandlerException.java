@@ -13,7 +13,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
 @ControllerAdvice
 public class RestHandlerException {
     @ExceptionHandler(NotFoundException.class)
@@ -22,8 +21,8 @@ public class RestHandlerException {
     public ErrorMsg handleNotFoundException(HttpServletRequest req, NotFoundException ex) {
         return new ErrorMsg(
                 LocalDateTime.now(),
-                HttpStatus.NOT_FOUND.value(),
                 List.of(ex.getMessage()),
+                HttpStatus.NOT_FOUND,
                 req.getRequestURI()
         );
     }
@@ -34,8 +33,8 @@ public class RestHandlerException {
     public ErrorMsg handleBadRequestException(HttpServletRequest req, BadRequestException ex) {
         return new ErrorMsg(
                 LocalDateTime.now(),
-                HttpStatus.BAD_REQUEST.value(),
                 List.of(ex.getMessage()),
+                HttpStatus.BAD_REQUEST,
                 req.getRequestURI()
         );
     }
@@ -46,8 +45,8 @@ public class RestHandlerException {
     public ErrorMsg handleDuplicateException(HttpServletRequest req, DuplicateException ex) {
         return new ErrorMsg(
                 LocalDateTime.now(),
-                HttpStatus.CONFLICT.value(),
                 List.of(ex.getMessage()),
+                HttpStatus.CONFLICT,
                 req.getRequestURI()
         );
     }
@@ -58,8 +57,8 @@ public class RestHandlerException {
     public ErrorMsg handleException(HttpServletRequest req, Exception ex) {
         return new ErrorMsg(
                 LocalDateTime.now(),
-                HttpStatus.INTERNAL_SERVER_ERROR.value(),
                 List.of(ex.getMessage()),
+                HttpStatus.INTERNAL_SERVER_ERROR,
                 req.getRequestURI()
         );
     }
@@ -73,14 +72,14 @@ public class RestHandlerException {
                 .getAllErrors()
                 .stream()
                 .map(error -> (error instanceof FieldError)
-                        ? ((FieldError) error).getField() + ": " + error.getDefaultMessage()
+                        ? ((FieldError) error).getField() + "Bad request: " + error.getDefaultMessage()
                         : error.getDefaultMessage())
                 .collect(Collectors.toList());
 
         return new ErrorMsg(
                 LocalDateTime.now(),
-                HttpStatus.BAD_REQUEST.value(),
                 errors,
+                HttpStatus.BAD_REQUEST,
                 req.getRequestURI()
         );
     }

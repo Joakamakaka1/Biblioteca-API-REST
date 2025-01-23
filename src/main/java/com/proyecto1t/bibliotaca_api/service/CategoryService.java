@@ -48,6 +48,10 @@ public class CategoryService {
             throw new NotFoundException("Category not found");
         }
 
+        if (categoryRepository.findByName(categoryDTO.getName()).isPresent()) {
+            throw new DuplicateException("Category already exists");
+        }
+
         Category category = mapper.toCategoryEntity(categoryDTO);
         category = categoryRepository.save(category);
         return mapper.toCategoryDTO(category);

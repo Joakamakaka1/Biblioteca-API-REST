@@ -49,6 +49,10 @@ public class AuthorService {
             throw new NotFoundException("Author not found");
         }
 
+        if (authorRepository.findByName(authorDTO.getName()).isPresent()) {
+            throw new DuplicateException("Author already exists");
+        }
+
         Author author = mapper.toAuthorEntity(authorDTO);
         author = authorRepository.save(author);
         return mapper.toAuthorDTO(author);

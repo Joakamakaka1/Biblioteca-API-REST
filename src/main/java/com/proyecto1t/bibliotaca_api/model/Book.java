@@ -20,6 +20,7 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Size(max = 100, message = "Title cannot exceed 100 characters")
     @NotEmpty(message = "Title cannot be empty")
     private String title;
 

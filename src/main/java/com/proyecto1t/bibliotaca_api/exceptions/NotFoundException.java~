@@ -1,0 +1,14 @@
+package com.proyecto1t.bibliotaca_api.exceptions;
+
+import java.util.List;
+
+public class NotFoundException extends RuntimeException {
+    private static final String DESCRIPTION = "Resource not found (404)";
+
+    private List<String> errors;
+
+    public NotFoundException(List<String> errors) {
+        super(DESCRIPTION + ": " + String.join(", ", errors));
+        this.errors = errors;
+    }
+}

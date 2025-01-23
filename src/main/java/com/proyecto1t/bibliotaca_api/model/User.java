@@ -19,6 +19,7 @@ public class User {
     private Long id;
 
     @NotEmpty(message = "Name cannot be empty")
+    @Column(unique = true, nullable = false)
     private String username;
 
     @Email(message = "Invalid email address")
