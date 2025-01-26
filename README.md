@@ -44,14 +44,14 @@ Con este sistema, se reduce el tiempo dedicado a tareas administrativas y se mej
 
 ### 4. **Usuarios (Users)**
 
-| Atributo       | Tipo          | Descripción                                               |
-|----------------|---------------|-----------------------------------------------------------|
-| **ID**         | Long          | Clave primaria, autoincremental.                          |
-| **Nombre**     | VARCHAR(255)  | Primer nombre del usuario (no nulo).                      |
-| **Apellido**   | VARCHAR(255)  | Apellido del usuario (no nulo).                           |
-| **Email**      | VARCHAR(255)  | Dirección de correo única (no nula).                      |
-| **Password**   | VARCHAR(255)  | Contraseña en formato seguro.                             |
-| **Rol**        | ENUM(`ADMIN`, `CLIENT`) | Rol del usuario en el sistema.                  |
+| Atributo       | Tipo                  | Descripción                                               |
+|----------------|-----------------------|-----------------------------------------------------------|
+| **ID**         | Long                  | Clave primaria, autoincremental.                          |
+| **Nombre**     | VARCHAR(255)          | Primer nombre del usuario (no nulo).                      |
+| **Apellido**   | VARCHAR(255)          | Apellido del usuario (no nulo).                           |
+| **Email**      | VARCHAR(255)          | Dirección de correo única (no nula).                      |
+| **Password**   | VARCHAR(255)          | Contraseña en formato seguro.                             |
+| **Rol**        | ENUM(`ADMIN`, `USER`) | Rol del usuario en el sistema.                  |
 
 ### 5. **Préstamos (Loans)**
 
@@ -142,7 +142,7 @@ A continuación, se detallan los endpoints para cada tabla de la base de datos:
 | **POST**   | `/users/register`   | Registra un nuevo usuario.                           | Todos                    |
 | **POST**   | `/users/login`      | Inicia sesión y genera un token JWT.                 | Todos                    |
 | **PUT**    | `/users/{username}`       | Actualiza los datos de un usuario específico por username. | Cliente (solo su info) o Admin |
-| **DELETE** | `/users/{username}`       | Elimina un usuario por username.                           | Solo Admin                |
+| **DELETE** | `/users/{username}`       | Elimina un usuario por username.                           | Cliente (solo su info) o Admin                |
 
 ---
 
@@ -164,7 +164,7 @@ A continuación, se detallan los endpoints para cada tabla de la base de datos:
 |------------|--------------------|------------------------------------------------------|---------------------------|
 | **GET**    | `/reservations`    | Obtiene todas las reservas registradas.             | Solo Admin                |
 | **GET**    | `/reservations/{id}`| Obtiene las reservas realizadas por el usuario autenticado.| Cliente (solo su info) o Admin |
-| **POST**   | `/reservations`    | Registra una nueva reserva.                          | Cliente (solo su info) o Admin |
+| **POST**   | `/reservations`    | Registra una nueva reserva.                          | Solo Admin |
 | **PUT**    | `/reservations/{id}`| Actualiza los datos de una reserva por ID.           | Solo Admin                |
 | **DELETE** | `/reservations/{id}`| Elimina una reserva por ID.                          | Solo Admin                |
 
@@ -172,11 +172,11 @@ A continuación, se detallan los endpoints para cada tabla de la base de datos:
 
 ### Endpoints para **Comentarios (Comments)**
 
-| **Método** | **Endpoint**  | **Descripción**                                      | **Acceso**                |
-|------------|---------------|------------------------------------------------------|---------------------------|
-| **GET**    | `/comments`   | Obtiene todos los comentarios de los libros.         | Todos                    |
-| **GET**    | `/comments/{id}` | Obtiene un comentario por ID.         | Todos                    |
-| **POST**   | `/comments`        | Crea un nuevo comentario para un libro.              | Cliente o Admin           |
+| **Método** | **Endpoint**  | **Descripción**                                      | **Acceso**                     |
+|------------|---------------|------------------------------------------------------|--------------------------------|
+| **GET**    | `/comments`   | Obtiene todos los comentarios de los libros.         | Todos                          |
+| **GET**    | `/comments/{id}` | Obtiene un comentario por ID.         | Todos                          |
+| **POST**   | `/comments`        | Crea un nuevo comentario para un libro.              | Todos                          |
 | **PUT**    | `/comments/{id}`   | Actualiza un comentario por ID.                      | Cliente (solo su info) o Admin |
 | **DELETE** | `/comments/{id}`   | Elimina un comentario por ID.                        | Cliente (solo su info) o Admin |
 
